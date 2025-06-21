@@ -24,7 +24,8 @@ public class NewPT {
 
             // 建造需求
             requirements(Category.turret, with(
-                    Items.oreZeta
+                    Items.oreZeta,10,
+                    mindustry.content.Items.copper,9
             ));
 
             // 弹药配置
