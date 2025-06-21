@@ -5,7 +5,7 @@ import mindustry.type.Item;
 
 public class Items {
     public static Item oreZeta;
-    public static void Items(){
+    public static void aloud(){
         oreZeta=new Item("Zeta", Color.valueOf("e07123")){{
         oreZeta.hardness=2;
         oreZeta.flammability=0.5f;
