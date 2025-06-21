@@ -16,12 +16,12 @@ import static mindustry.type.ItemStack.with;
 public class gz extends  Mod{
 
     // 声明炮台变量
-    public static ItemTurret foreshadow;
+    public static ItemTurret forefshadow;
 
     @Override
     public void loadContent() {
         // 实例化 foreshadow 炮台
-        foreshadow = new ItemTurret("foreshadow"){{
+        forefshadow = new ItemTurret("foreshadow"){{
             // 设置射程并保存引用
             float brange = range = 500f;
 
