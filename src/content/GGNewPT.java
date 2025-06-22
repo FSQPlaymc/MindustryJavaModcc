@@ -23,7 +23,9 @@ public class GGNewPT {
                     mindustry.content.Items.copper,1145
             ));
             ammo(
-                    GGItems.oreCZzw,new BasicBulletType(2.5f,9){{
+                    GGItems.oreCZzw,new BasicBulletType(3.5f,15){{//speed：飞行速度 damage参数表示子弹的基础伤害值
+                        pierceDamageFactor=0.7f;
+                        buildingDamageMultiplier=2.0f;
                         height=8f;
                         width=8f;
                 lifetime=900;
@@ -32,6 +34,12 @@ public class GGNewPT {
 
                     }}
             );
+            size=1;
+            ammoPerShot = 0;             // 每次射击消耗弹药
+            rotateSpeed = 3f;            // 旋转速度
+            // 生命值和冷却系统
+            scaledHealth = 1500;
+            coolantMultiplier = 0.8f;
 
         }};
 
@@ -69,19 +77,20 @@ public class GGNewPT {
             );
 
             // 炮台属性
-            maxAmmo = 40;
-            ammoPerShot = 5;
-            rotateSpeed = 2f;
-            reload = 200f;
-            ammoUseEffect = Fx.casing3Double;
-            recoil = 5f;
-            cooldownTime = reload;
-            shake = 4f;
-            size = 4;
-            shootCone = 2f;
-            shootSound = Sounds.railgun;
-            unitSort = UnitSorts.strongest;
-            envEnabled |= Env.space;
+            maxAmmo = 40;                // 最大弹药量
+            ammoPerShot = 5;             // 每次射击消耗弹药
+            rotateSpeed = 2f;            // 旋转速度
+            reload = 200f;               // 装弹时间
+            ammoUseEffect = Fx.casing3Double;  // 弹药使用特效
+            recoil = 5f;                 // 后坐力
+            cooldownTime = reload;       // 冷却时间
+            shake = 4f;                  // 震动强度
+            size = 4;                    // 尺寸
+            shootCone = 2f;              // 射击散布角度
+            shootSound = Sounds.railgun; // 射击音效
+            unitSort = UnitSorts.strongest; // 单位排序方式
+            envEnabled |= Env.space;     // 可用环境(太空)
+
 
             // 生命值和冷却系统
             scaledHealth = 150;
