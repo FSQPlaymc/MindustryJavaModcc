@@ -9,7 +9,7 @@ public class GGItems {
     public static Item itemCZzw;
     public static void aloud(){
         itemZeta=new Item("Zeta", Color.valueOf("e07123")){{
-            this.hardness=2;
+            this.hardness=3;
         this.flammability=0.5f;
         this.explosiveness=99.9f;
         this.radioactivity=222.2f;
