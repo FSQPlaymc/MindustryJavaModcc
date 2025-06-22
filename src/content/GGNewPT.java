@@ -6,17 +6,34 @@ import mindustry.entities.bullet.BasicBulletType;
 import mindustry.entities.bullet.RailBulletType;
 import mindustry.gen.Sounds;
 import mindustry.type.Category;
-import mindustry.type.ItemStack;
 import mindustry.world.Block;
 import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.meta.Env;
 
 import static mindustry.type.ItemStack.with;
 
-public class NewPT {
+public class GGNewPT {
     public static Block NGM;
+    public  static ItemTurret xiaogangpao;
     public static ItemTurret forefshadow;
     public static void NewP(){
+        xiaogangpao=new ItemTurret("gp"){{
+            requirements(Category.turret,with(mindustry.content.Items.metaglass,1145,
+                    GGItems.oreZeta,1145,
+                    mindustry.content.Items.copper,1145
+            ));
+            ammo(
+                    GGItems.oreCZzw,new BasicBulletType(2.5f,9){{
+                        height=8f;
+                        width=8f;
+                lifetime=900;
+                damage=114514;
+                hitEffect = despawnEffect = Fx.hitBulletColor;
+
+                    }}
+            );
+
+        }};
 
         forefshadow = new ItemTurret("foreshadow"){{
             // 设置射程并保存引用
@@ -24,13 +41,13 @@ public class NewPT {
 
             // 建造需求
             requirements(Category.turret, with(
-                    Items.oreZeta,10,
+                    GGItems.oreZeta,10,
                     mindustry.content.Items.copper,9
             ));
 
             // 弹药配置
             ammo(
-                    Items.oreZeta, new RailBulletType(){{
+                    GGItems.oreZeta, new RailBulletType(){{
                         // 特效设置
                         shootEffect = Fx.instShoot;
                         hitEffect = Fx.instHit;

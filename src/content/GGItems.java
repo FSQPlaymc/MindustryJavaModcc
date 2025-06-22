@@ -3,14 +3,20 @@ package content;
 import arc.graphics.Color;
 import mindustry.type.Item;
 
-public class Items {
+public class GGItems {
     public static Item oreZeta;
+    public static Item oreCZzw;
     public static void aloud(){
         oreZeta=new Item("Zeta", Color.valueOf("e07123")){{
             this.hardness=2;
         this.flammability=0.5f;
         this.explosiveness=99.9f;
         this.radioactivity=222.2f;
+        }};
+        oreCZzw=new Item("Zwangzaozhiwu",Color.valueOf("ed0e21")){{
+            this.hardness=90;
+            this.explosiveness=1000;
+            this.charge=1000;
         }};
 
     }

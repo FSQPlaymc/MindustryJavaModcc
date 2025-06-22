@@ -1,0 +1,153 @@
+属性	类型	默认值	说明
+pierceEffect	Effect	Fx.hitBulletSmall	穿透特效（击中每个目标时触发）
+pointEffect	Effect	Fx.none	路径点特效（沿弹道路径间隔生成）
+lineEffect	Effect	Fx.none	整条路径特效（整个弹道路径的视觉效果）
+endEffect	Effect	Fx.none	终点特效（弹道末端效果）
+length	float	100.0F	最大射程（像素距离）
+pointEffectSpace	float	20.0F	路径点间隔（特效生成间距）
+构造函数配置
+java
+public RailBulletType() {
+    speed = 0.0F;               // 瞬时命中（无飞行时间）
+    pierceBuilding = true;      // 穿透建筑
+    pierce = true;              // 穿透所有实体
+    reflectable = false;        // 不可被反射
+    hitEffect = Fx.none;        // 禁用常规命中特效
+    despawnEffect = Fx.none;    // 禁用消失特效
+    collides = false;           // 禁用常规碰撞检测
+    keepVelocity = false;       // 穿透后不保持速度
+    lifetime = 1.0F;           // 极短存在时间（瞬时效果）
+    delayFrags = true;          // 延迟碎片生成
+}
+核心方法解析
+1. 射程计算
+java
+protected float calculateRange() {
+    return this.length; // 直接返回预设长度
+}
+2. 穿透处理 (handlePierce)
+java
+void handlePierce(Bullet b, float initialHealth, float x, float y) {
+    // 计算穿透伤害衰减
+    float damageReduction = Math.max(initialHealth * pierceDamageFactor, 0.0F);
+
+    if(b.damage <= 0) {
+        // 记录实际穿透距离
+        b.fdata = Math.min(b.fdata, b.distanceTo(x,y));
+    } else {
+        // 触发穿透特效
+        pierceEffect.at(x, y, b.rotation());
+
+        // 应用伤害衰减
+        b.damage -= Math.min(b.damage, damageReduction);
+
+        if(b.damage <= 0) {
+            // 子弹耗尽时记录终点
+            b.fdata = Math.min(b.fdata, b.distanceTo(x,y));
+        }
+    }
+}
+3. 子弹初始化 (init)
+java
+void init(Bullet b) {
+    super.init(b);
+    b.fdata = this.length; // 存储最大射程
+
+    // 执行射线碰撞检测
+    Damage.collideLine(
+        b, b.team, b.type.hitEffect,
+        b.x, b.y, b.rotation(), this.length,
+        false, false, this.pierceCap
+    );
+
+    float actualLength = b.fdata; // 获取实际碰撞距离
+    Vec2 direction = Tmp.v1.setAngle(b.rotation()).nor();
+
+    // 生成路径点特效
+    if(pointEffect != Fx.none) {
+        for(float dist=0; dist<=actualLength; dist+=pointEffectSpace) {
+            float px = b.x + direction.x * dist;
+            float py = b.y + direction.y * dist;
+            pointEffect.at(px, py, b.rotation(), trailColor);
+        }
+    }
+
+    // 生成终点特效（无碰撞时）
+    if(endEffect != Fx.none && b.collided.size == 0) {
+        float ex = b.x + direction.x * actualLength;
+        float ey = b.y + direction.y * actualLength;
+        endEffect.at(ex, ey, b.rotation(), hitColor);
+    }
+
+    // 生成整条路径特效
+    if(lineEffect != Fx.none) {
+        Vec2 endPoint = new Vec2(b.x, b.y)
+            .add(direction.x * actualLength,
+                 direction.y * actualLength);
+        lineEffect.at(b.x, b.y, b.rotation(), hitColor, endPoint);
+    }
+}
+4. 碰撞检测逻辑 (testCollision)
+java
+boolean testCollision(Bullet bullet, Building tile) {
+    // 只检测敌对建筑
+    return bullet.team != tile.team;
+}
+5. 建筑命中处理 (hitTile)
+java
+void hitTile(Bullet b, Building build, float x, float y,
+            float initialHealth, boolean direct) {
+    // 调用穿透处理逻辑
+    handlePierce(b, initialHealth, x, y);
+}
+设计特点总结
+瞬时命中机制
+
+零飞行时间 (speed=0)
+
+极短生命周期 (lifetime=1帧)
+
+适用于激光/轨道炮类武器
+
+高效碰撞检测
+
+使用 Damage.collideLine() 射线检测
+
+避免传统子弹的逐帧碰撞计算
+
+模块化特效系统
+
+四层独立特效控制：
+
+单点穿透 (pierceEffect)
+
+路径节点 (pointEffect)
+
+整条路径 (lineEffect)
+
+路径终点 (endEffect)
+
+穿透衰减机制
+
+通过 pierceDamageFactor 控制伤害衰减
+
+动态计算实际穿透距离 (b.fdata)
+
+使用场景建议
+此类特别适合实现以下武器效果：
+
+java
+// 轨道炮子弹示例
+new RailBulletType(){{
+    length = 300f;                  // 30格射程
+    damage = 500;                   // 基础伤害
+    pierceDamageFactor = 0.7f;      // 每次穿透伤害衰减30%
+
+    // 特效配置
+    pierceEffect = Fx.hitLancer;    // 蓝色电击效果
+    pointEffect = Fx.railTrail;     // 路径火花
+    lineEffect = Fx.railShoot;      // 主光束
+    endEffect = Fx.railHit;         // 终点爆炸
+
+    pointEffectSpace = 10f;         // 密集火花间距
+}};
