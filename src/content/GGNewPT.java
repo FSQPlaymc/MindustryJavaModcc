@@ -1,5 +1,6 @@
 package content;
 
+import arc.Core;
 import mindustry.content.Fx;
 import mindustry.entities.UnitSorts;
 import mindustry.entities.bullet.BasicBulletType;
@@ -18,6 +19,7 @@ public class GGNewPT {
     public static ItemTurret forefshadow;
     public static void NewP(){
         xiaogangpao=new ItemTurret("gp"){{
+            fullIcon = Core.atlas.find("gp");
             requirements(Category.turret,with(mindustry.content.Items.metaglass,1145,
                     GGItems.oreZeta,1145,
                     mindustry.content.Items.copper,1145
@@ -35,11 +37,14 @@ public class GGNewPT {
                     }}
             );
             size=1;
-            ammoPerShot = 0;             // 每次射击消耗弹药
+            range = 114514;//射程
+            ammoPerShot = 1;             // 每次射击消耗弹药
             rotateSpeed = 3f;            // 旋转速度
             // 生命值和冷却系统
             scaledHealth = 1500;
             coolantMultiplier = 0.8f;
+            coolant = consumeCoolant(1f);
+            consumePower(10f);
 
         }};
 

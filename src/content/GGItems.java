@@ -1,5 +1,6 @@
 package content;
 
+import arc.Core;
 import arc.graphics.Color;
 import mindustry.type.Item;
 
@@ -17,8 +18,9 @@ public class GGItems {
             this.hardness=90;
             this.explosiveness=1000;
             this.charge=1000;
-        }};
+            this.fullIcon = Core.atlas.find("Zwangzaozhiwu");
 
+        }};
     }
 
 }
