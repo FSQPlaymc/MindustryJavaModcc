@@ -21,11 +21,11 @@ public class GGNewPT {
         xiaogangpao=new ItemTurret("gp"){{
             fullIcon = Core.atlas.find("gp");
             requirements(Category.turret,with(mindustry.content.Items.metaglass,1145,
-                    GGItems.oreZeta,1145,
+                    GGItems.itemZeta,1145,
                     mindustry.content.Items.copper,1145
             ));
             ammo(
-                    GGItems.oreCZzw,new BasicBulletType(3.5f,15){{//speed：飞行速度 damage参数表示子弹的基础伤害值
+                    GGItems.itemCZzw,new BasicBulletType(3.5f,15){{//speed：飞行速度 damage参数表示子弹的基础伤害值
                         pierceDamageFactor=0.7f;
                         buildingDamageMultiplier=2.0f;
                         height=8f;
@@ -54,13 +54,13 @@ public class GGNewPT {
 
             // 建造需求
             requirements(Category.turret, with(
-                    GGItems.oreZeta,10,
+                    GGItems.itemCZzw,10,
                     mindustry.content.Items.copper,9
             ));
 
             // 弹药配置
             ammo(
-                    GGItems.oreZeta, new RailBulletType(){{
+                    GGItems.itemZeta, new RailBulletType(){{
                         // 特效设置
                         shootEffect = Fx.instShoot;
                         hitEffect = Fx.instHit;
