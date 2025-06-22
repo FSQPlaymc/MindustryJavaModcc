@@ -11,5 +11,6 @@ public class gzMod extends  Mod{
     public void loadContent() {
         GGItems.aloud();//加载方式
         GGNewPT.NewP();
+        GG_Block.Ore();
         // 实例化 foreshadow 炮台
 }}
