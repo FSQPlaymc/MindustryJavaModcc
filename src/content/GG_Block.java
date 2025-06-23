@@ -37,7 +37,6 @@ public class GG_Block {
             hasLiquids = true;//消耗流体
             hasPower = true;//消耗电力
             consumePower(90.0f);//*100
-
             consumeItem(GGItems.zeta, 10);
             consumeLiquid(Liquids.oil, 1.9f);
 
