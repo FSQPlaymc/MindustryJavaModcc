@@ -14,14 +14,14 @@ import mindustry.world.meta.Env;
 import static mindustry.type.ItemStack.with;
 
 public class GGNewPT {
-    public static Block NGM;
+    //public static Block NGM;
     public  static ItemTurret xiaogangpao;
     public static ItemTurret forefshadow;
     public static void NewP(){
         xiaogangpao=new ItemTurret("gp"){{
             fullIcon = Core.atlas.find("gp");
             requirements(Category.turret,with(mindustry.content.Items.metaglass,1145,
-                    GGItems.itemZeta,1145,
+                    GGItems.zeta,1145,
                     mindustry.content.Items.copper,1145
             ));
             ammo(
@@ -60,7 +60,7 @@ public class GGNewPT {
 
             // 弹药配置
             ammo(
-                    GGItems.itemZeta, new RailBulletType(){{
+                    GGItems.zeta, new RailBulletType(){{
                         // 特效设置
                         shootEffect = Fx.instShoot;
                         hitEffect = Fx.instHit;

@@ -5,10 +5,10 @@ import arc.graphics.Color;
 import mindustry.type.Item;
 
 public class GGItems {
-    public static Item itemZeta;
+    public static Item zeta;
     public static Item itemCZzw;
     public static void aloud(){
-        itemZeta=new Item("Zeta", Color.valueOf("e07123")){{
+        zeta=new Item("Zeta", Color.valueOf("e07123")){{//come from NewHorizon
             this.hardness=4;
         this.flammability=0.5f;
         this.explosiveness=99.9f;
