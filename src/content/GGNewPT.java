@@ -2,22 +2,73 @@ package content;
 
 import arc.Core;
 import mindustry.content.Fx;
+import mindustry.content.Items;
 import mindustry.entities.UnitSorts;
+import mindustry.entities.bullet.ArtilleryBulletType;
 import mindustry.entities.bullet.BasicBulletType;
 import mindustry.entities.bullet.RailBulletType;
 import mindustry.gen.Sounds;
+import mindustry.graphics.Pal;
 import mindustry.type.Category;
 import mindustry.world.Block;
 import mindustry.world.blocks.defense.turrets.ItemTurret;
+import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.meta.Env;
 
 import static mindustry.type.ItemStack.with;
 
 public class GGNewPT {
     //public static Block NGM;
+    public static ItemTurret bibao;
     public  static ItemTurret xiaogangpao;
     public static ItemTurret forefshadow;
     public static void NewP(){
+        bibao = new ItemTurret("biao"){{
+            requirements(Category.turret,with(Items.silicon,13,
+                   // GGItems.zeta,1145,
+                    mindustry.content.Items.copper,20
+            ));
+            ammo(
+                    Items.silicon, new ArtilleryBulletType(1f, 20){{// 创建新的炮弹类型(基础伤害3, 初始弹药量20)
+                        knockback = 0.8f;          // 击退力度：0.8
+                        lifetime = 100f;           // 子弹存在时间：100帧
+                        width = height = 11f;      // 碰撞箱尺寸：11x11
+                        collidesTiles = false;     // 不与环境方块碰撞
+                        splashDamageRadius = 25f * 0.75f; // 溅射半径：18.75格
+                        splashDamage = 120f;        // 溅射伤害：33
+                        reloadMultiplier = 1.2f;   // 装填时间倍率：1.2倍(更慢)
+                        ammoMultiplier = 2f;       // 单次装填消耗弹药倍率：3倍
+                        homingPower = 0.2f;       // 自动追踪强度：0.08
+                        homingRange = 50f;         // 自动追踪范围：50格
+                        trailLength = 7;           // 尾迹长度：7单位
+                        trailWidth = 3f;           // 尾迹宽度：3单位
+                        buildingDamageMultiplier = 0.5f;
+                        hitColor = backColor = trailColor = Pal.siliconAmmoBack; // 命中/背景/尾迹色：硅弹药背景色
+                        frontColor = Pal.siliconAmmoFront; // 弹头颜色：硅弹药前景色
+                        despawnEffect = Fx.hitBulletColor; // 消失特效：子弹命中颜色特效
+                    }},
+                    Items.graphite, new ArtilleryBulletType(2.5f, 20){{
+                        knockback = 0.8f;
+                        lifetime = 80f;
+                        width = height = 11f;
+                        collidesTiles = false;
+                        splashDamageRadius = 25f * 0.75f;
+                        splashDamage = 33f;
+
+                        hitColor = backColor = trailColor = Pal.graphiteAmmoBack;
+                        frontColor = Pal.graphiteAmmoFront;
+                        despawnEffect = Fx.hitBulletColor;
+                    }});
+            size=2;
+            range = 250;//射程
+            ammoPerShot = 1;             // 每次射击消耗弹药
+            rotateSpeed = 4f;            // 旋转速度
+            // 生命值和冷却系统
+            scaledHealth = 500;
+            coolantMultiplier = 0.8f;
+            coolant = consumeCoolant(1f);
+            consumePower(10f);
+        }};
         xiaogangpao=new ItemTurret("gp"){{
             fullIcon = Core.atlas.find("gp");
             requirements(Category.turret,with(mindustry.content.Items.metaglass,1145,
@@ -27,6 +78,8 @@ public class GGNewPT {
             ammo(
                     GGItems.itemCZzw,new BasicBulletType(3.5f,15){{//speed：飞行速度 damage参数表示子弹的基础伤害值
                         pierceDamageFactor=0.7f;
+                        splashDamageRadius = 25f * 0.75f; // 溅射半径：18.75格
+                        splashDamage = 1145f;        // 溅射伤害：33
                         buildingDamageMultiplier=2.0f;
                         height=8f;
                         width=8f;
@@ -39,7 +92,7 @@ public class GGNewPT {
             size=1;
             range = 114514;//射程
             ammoPerShot = 1;             // 每次射击消耗弹药
-            rotateSpeed = 3f;            // 旋转速度
+            rotateSpeed = 4f;            // 旋转速度
             // 生命值和冷却系统
             scaledHealth = 1500;
             coolantMultiplier = 0.8f;

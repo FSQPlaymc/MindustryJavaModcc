@@ -10,9 +10,11 @@ import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.production.GenericCrafter;
 
 public class GG_Block {
+
     public static GenericCrafter chuangZaolu;
     public static OreBlock oreZeta;
     public static void Ore(){
+
         oreZeta=new OreBlock("zeta"){{
             itemDrop = GGItems.zeta; // 掉落物（必须）
             oreDefault = true;
@@ -32,6 +34,7 @@ public class GG_Block {
             craftEffect = Fx.pulverizeMedium;
             outputItem = new ItemStack(GGItems.itemCZzw, 2);//产出物品
             craftTime = 300f;//生产时间
+            itemCapacity = 20;//物品数
             size = 4;
             hasItems = true;//消耗物品
             hasLiquids = true;//消耗流体
