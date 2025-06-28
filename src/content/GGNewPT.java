@@ -26,7 +26,7 @@ public class GGNewPT {
         bibao = new ItemTurret("biao"){{
             requirements(Category.turret,with(Items.silicon,13,
                    // GGItems.zeta,1145,
-                    mindustry.content.Items.copper,20
+                    Items.copper,20
             ));
             ammo(
                     Items.silicon, new ArtilleryBulletType(1f, 20){{// 创建新的炮弹类型(基础伤害3, 初始弹药量20)
@@ -59,6 +59,8 @@ public class GGNewPT {
                         frontColor = Pal.graphiteAmmoFront;
                         despawnEffect = Fx.hitBulletColor;
                     }});
+            targetAir = false;          // 是否以空中单位为目标
+            reload = 20f;               // 重新装填时间（帧）
             size=2;
             range = 250;//射程
             ammoPerShot = 1;             // 每次射击消耗弹药
