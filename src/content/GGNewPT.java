@@ -28,8 +28,9 @@ public class GGNewPT {
                    // GGItems.zeta,1145,
                     Items.copper,20
             ));
+            targetAir = false;// 是否以空中单位为目标
             ammo(
-                    Items.silicon, new ArtilleryBulletType(1f, 20){{// 创建新的炮弹类型(基础伤害3, 初始弹药量20)
+                    Items.silicon, new ArtilleryBulletType(1.5f, 20){{// 创建新的炮弹类型(基础伤害3, 初始弹药量20)
                         knockback = 0.8f;          // 击退力度：0.8
                         lifetime = 100f;           // 子弹存在时间：100帧
                         width = height = 11f;      // 碰撞箱尺寸：11x11
@@ -59,17 +60,16 @@ public class GGNewPT {
                         frontColor = Pal.graphiteAmmoFront;
                         despawnEffect = Fx.hitBulletColor;
                     }});
-            targetAir = false;          // 是否以空中单位为目标
-            reload = 20f;               // 重新装填时间（帧）
+            reload = 40f;               // 重新装填时间（帧）
             size=2;
-            range = 250;//射程
+            range = 270;//射程
             ammoPerShot = 1;             // 每次射击消耗弹药
             rotateSpeed = 4f;            // 旋转速度
             // 生命值和冷却系统
             scaledHealth = 500;
             coolantMultiplier = 0.8f;
             coolant = consumeCoolant(1f);
-            consumePower(10f);
+            //consumePower(10f);  电力
         }};
         xiaogangpao=new ItemTurret("gp"){{
             fullIcon = Core.atlas.find("gp");
