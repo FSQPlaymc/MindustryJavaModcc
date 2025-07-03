@@ -43,7 +43,7 @@ public class GGNewPT {
                         homingRange = 50f;         // 自动追踪范围：50格
                         trailLength = 7;           // 尾迹长度：7单位
                         trailWidth = 3f;           // 尾迹宽度：3单位
-                        buildingDamageMultiplier = 0.5f;
+                        buildingDamageMultiplier = 0.5f;//建筑减伤
                         hitColor = backColor = trailColor = Pal.siliconAmmoBack; // 命中/背景/尾迹色：硅弹药背景色
                         frontColor = Pal.siliconAmmoFront; // 弹头颜色：硅弹药前景色
                         despawnEffect = Fx.hitBulletColor; // 消失特效：子弹命中颜色特效
@@ -54,7 +54,7 @@ public class GGNewPT {
                         width = height = 11f;
                         collidesTiles = false;
                         splashDamageRadius = 25f * 0.75f;
-                        splashDamage = 33f;
+                        splashDamage = 45f;
 
                         hitColor = backColor = trailColor = Pal.graphiteAmmoBack;
                         frontColor = Pal.graphiteAmmoFront;

@@ -7,7 +7,30 @@ import mindustry.type.Item;
 public class GGItems {
     public static Item zeta;
     public static Item itemCZzw;
+    public static Item Sijingti;
+    public static Item ThuaKuangShi;
+    public static Item TanNaMiHeXing;
+    public static Item zaisu;
     public static void aloud(){
+        Sijingti = new Item("guijingti", Color.valueOf("031817")) {{
+            this.hardness = 0;
+            this.explosiveness = 0.0F;//爆炸 = 0.0F;可燃性
+            this.flammability = 0.0F;
+            this.charge = 0.0F;//电性
+        }};
+        ThuaKuangShi = new Item("tanhuakuangshi",Color.valueOf("b81163")){{
+            this.hardness =3;
+            this.flammability = 20.0f;
+            this.radioactivity = 15.5f;//放射性
+        }};
+        TanNaMiHeXing = new Item("tanmnimihexing",Color.valueOf("0bb330")){{
+            this.hardness = 0;
+        }};
+        zaisu = new Item("zaisu",Color.valueOf("3661fb")){{
+            this.flammability = 5.0f;
+            this.explosiveness = 10.0f;
+            this.charge =250.0f;
+        }};
         zeta=new Item("Zeta", Color.valueOf("e07123")){{//come from NewHorizon
             this.hardness=4;
         this.flammability=0.5f;
