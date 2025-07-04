@@ -11,6 +11,7 @@ public class GGItems {
     public static Item ThuaKuangShi;
     public static Item TanNaMiHeXing;
     public static Item zaisu;
+    public static  Item hejing;
     public static void aloud(){
         Sijingti = new Item("guijingti", Color.valueOf("031817")) {{
             this.hardness = 0;
@@ -31,6 +32,12 @@ public class GGItems {
             this.explosiveness = 10.0f;
             this.charge =250.0f;
         }};
+        hejing=new Item("hexingjingti",Color.valueOf("a227ec")){{
+            this.flammability= 30.0f;
+            this.explosiveness = 150.0f;
+            this.radioactivity = 130.0f;
+            this.charge = 300.0f;
+        }};
         zeta=new Item("Zeta", Color.valueOf("e07123")){{//come from NewHorizon
             this.hardness=4;
         this.flammability=0.5f;
@@ -48,7 +55,14 @@ public class GGItems {
     }
 
 }
-/*public Color color; //颜色
+/*
+差点忘了
+核晶
+燃30%
+放130%
+爆150%
+电300%
+public Color color; //颜色
 public float explosiveness; //爆炸性
 public float flammability; //可燃性
 public float radioactivity; //放射性
