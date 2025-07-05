@@ -13,13 +13,20 @@ public class GG_Block {
 
     public static GenericCrafter chuangZaolu;
     public static OreBlock oreZeta;
+    public static OreBlock oreThuawu;
     public static void Ore(){
+        oreThuawu = new OreBlock("orethuawu"){{
+            itemDrop = GGItems.ThuaKuangShi;
+            oreDefault = true;
+            oreThreshold = 0.23f;
+            oreScale = 9.0f;
+        }};
 
         oreZeta=new OreBlock("zeta"){{
             itemDrop = GGItems.zeta; // 掉落物（必须）
             oreDefault = true;
-            oreThreshold = 0.71f;
-            oreScale = 10.47619f;
+            oreThreshold = 0.71f;//控制矿石生成的稀疏程度。值越大（越接近1），矿石越稀少；值越小（越接近0），矿石越密集。
+            oreScale = 10.47619f;//控制矿石分布图案的频率。值越大，矿石分布越密集（图案更小更频繁）；值越小，矿石分布越稀疏（图案更大更平缓）
             variants = 3;//三种贴图在blocks/environment中
             //fullIcon=Core.atlas.find("custom-ores/ore_zeta");
         }};

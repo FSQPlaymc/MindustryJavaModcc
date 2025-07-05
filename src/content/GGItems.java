@@ -21,22 +21,22 @@ public class GGItems {
         }};
         ThuaKuangShi = new Item("tanhuakuangshi",Color.valueOf("b81163")){{
             this.hardness =3;
-            this.flammability = 20.0f;
-            this.radioactivity = 15.5f;//放射性
+            this.flammability = 2.0f;
+            this.radioactivity = 1.55f;//放射性
         }};
         TanNaMiHeXing = new Item("tanmnimihexing",Color.valueOf("0bb330")){{
             this.hardness = 0;
         }};
         zaisu = new Item("zaisu",Color.valueOf("3661fb")){{
-            this.flammability = 5.0f;
-            this.explosiveness = 10.0f;
+            this.flammability = 0.5f;
+            this.explosiveness = 1.0f;
             this.charge =250.0f;
         }};
         hejing=new Item("hexingjingti",Color.valueOf("a227ec")){{
-            this.flammability= 30.0f;
-            this.explosiveness = 150.0f;
-            this.radioactivity = 130.0f;
-            this.charge = 300.0f;
+            this.flammability= 3.0f;
+            this.explosiveness = 15.0f;
+            this.radioactivity = 13.0f;
+            this.charge = 30.0f;
         }};
         zeta=new Item("Zeta", Color.valueOf("e07123")){{//come from NewHorizon
             this.hardness=4;
