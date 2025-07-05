@@ -57,4 +57,4 @@ public class GG_Block {
 /*重要原则：
 当使用 new OreBlock("name") 时，必须在 sprites/blocks/ores/ 下有对应的 ore-name.png 文件。
 若使用自定义路径，则必须显式声明 sprite = Core.atlas.find("your/path")。
-二者必选其一，否则矿石无法显示贴图。*/
+二者必选其一否则矿石无法显示贴图。*/
