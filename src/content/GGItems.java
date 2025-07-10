@@ -2,7 +2,10 @@ package content;
 
 import arc.Core;
 import arc.graphics.Color;
+import arc.struct.Seq;
 import mindustry.type.Item;
+
+import static mindustry.content.Items.*;
 
 public class GGItems {
     public static Item zeta;
@@ -12,6 +15,8 @@ public class GGItems {
     public static Item TanNaMiHeXing;
     public static Item zaisu;
     public static  Item hejing;
+    public static final Seq<Item> GGItemsj = new Seq();
+    public GGItems(){}
     public static void aloud(){
         Sijingti = new Item("guijingti", Color.valueOf("031817")) {{
             this.hardness = 0;
@@ -52,6 +57,9 @@ public class GGItems {
             this.fullIcon = Core.atlas.find("Zwangzaozhiwu");
 
         }};
+        GGItemsj.addAll(new Item[]{scrap, copper, lead, graphite, coal, titanium, thorium, silicon, plastanium,
+                phaseFabric, surgeAlloy, sporePod, sand, blastCompound, pyratite, metaglass,itemCZzw,hejing,ThuaKuangShi,TanNaMiHeXing,
+                Sijingti});
     }
 
 }
