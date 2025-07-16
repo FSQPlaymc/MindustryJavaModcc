@@ -1,6 +1,7 @@
 package content;
 
 
+import fesf.gailubao;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
@@ -9,12 +10,28 @@ import mindustry.type.ItemStack;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.production.GenericCrafter;
 
+import static content.GGItems.Sijingti;
+
 public class GG_Block {
 
     public static GenericCrafter chuangZaolu;
+    public static gailubao.gailubaoFactory GGxiaoxinggui;
     public static OreBlock oreZeta;
     public static OreBlock oreThuawu;
     public static void Ore(){
+        GGxiaoxinggui =new gailubao.gailubaoFactory("xiaoxinggui"){{
+            requirements(Category.crafting,ItemStack.with(GGItems.Sijingti,150));
+            outputItem = new ItemStack(Items.silicon,1);
+            craftTime = 60f;
+            itemCapacity = 20;
+            size =3;
+            hasItems = true;//消耗物品
+            hasLiquids = false;//消耗流体
+            hasPower = true;//消耗电力
+            craftEffect = Fx.none;
+            consumePower(0.45f);//*100
+            consumeItem(Sijingti, 5);
+        }};
         oreThuawu = new OreBlock("orethuawu"){{
             itemDrop = GGItems.ThuaKuangShi;
             oreDefault = true;
