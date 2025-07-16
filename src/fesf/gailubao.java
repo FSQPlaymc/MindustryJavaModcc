@@ -50,7 +50,7 @@ public class gailubao extends Mod {
             super.drawPlace(x, y, rotation, valid);
 
             // 显示爆炸警告
-            float width = 150f, height = 30f;
+            float width = 4f, height = 3f;
             float offset = -height * 2f;
             Draw.color(explosionColor);
             Draw.rect(Core.atlas.find("warning"), x * tilesize + offset, y * tilesize, width, height);
