@@ -3,6 +3,7 @@ package content;
 import arc.Core;
 import arc.graphics.Color;
 import arc.struct.Seq;
+import mindustry.content.Items;
 import mindustry.type.Item;
 
 import static mindustry.content.Items.*;
@@ -19,13 +20,13 @@ public class GGItems {
     public GGItems(){}
     public static void aloud(){
         Sijingti = new Item("guijingti", Color.valueOf("031817")) {{
-            this.hardness = 2;
+            this.hardness = 3;
             this.explosiveness = 0.0F;//爆炸 = 0.0F;可燃性
             this.flammability = 0.0F;
             this.charge = 0.0F;//电性
         }};
         ThuaKuangShi = new Item("tanhuakuangshi",Color.valueOf("b81163")){{
-            this.hardness =3;
+            this.hardness =4;
             this.flammability = 2.0f;
             this.radioactivity = 1.55f;//放射性
         }};
@@ -57,6 +58,7 @@ public class GGItems {
             this.fullIcon = Core.atlas.find("Zwangzaozhiwu");
 
         }};
+        carbide.hardness=4;//碳化物
         GGItemsj.addAll(new Item[]{scrap, copper, lead, graphite, coal, titanium, thorium, silicon, plastanium,
                 phaseFabric, surgeAlloy, sporePod, sand, blastCompound, pyratite, metaglass,itemCZzw,hejing,ThuaKuangShi,TanNaMiHeXing,
                 Sijingti});

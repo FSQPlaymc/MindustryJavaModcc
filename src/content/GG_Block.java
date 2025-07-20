@@ -1,7 +1,7 @@
 package content;
 
 
-import fesf.gailubao;
+import api.gailubao;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
@@ -19,14 +19,18 @@ public class GG_Block {
     public static OreBlock oreZeta;
     public static OreBlock oreThuawu;
     public static OreBlock oreGuijingti;
-    public static OreBlock oreTanhuanwuq;
+    public static OreBlock oreCarbide;
     public static void Ore(){
+        oreCarbide =new OreBlock("carbide-wall",Items.carbide){{
+            wallOre =true;
+        }};
         oreGuijingti = new OreBlock("silicon-crystal-slag-wall"){{
             itemDrop = Sijingti;
             wallOre = true;//墙矿
         }};
         oreGuijingti = new OreBlock("silicon-crystal-slag"){{
             itemDrop = Sijingti;
+            variants = 2;
         }};
         GGxiaoxinggui =new gailubao.gailubaoFactory("xiaoxinggui"){{
             requirements(Category.crafting,ItemStack.with(GGItems.Sijingti,150));
