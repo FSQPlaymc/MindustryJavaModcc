@@ -19,7 +19,7 @@ public class GGItems {
     public GGItems(){}
     public static void aloud(){
         Sijingti = new Item("guijingti", Color.valueOf("031817")) {{
-            this.hardness = 0;
+            this.hardness = 2;
             this.explosiveness = 0.0F;//爆炸 = 0.0F;可燃性
             this.flammability = 0.0F;
             this.charge = 0.0F;//电性

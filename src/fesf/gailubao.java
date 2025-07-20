@@ -50,19 +50,19 @@ public class gailubao extends Mod {
             super.drawPlace(x, y, rotation, valid);
 
             // 显示爆炸警告
-            float width = 4f, height = 3f;
+            float width = 10f, height = 3f;
             float offset = -height * 2f;
             Draw.color(explosionColor);
             Draw.rect(Core.atlas.find("warning"), x * tilesize + offset, y * tilesize, width, height);
             Draw.color();
-
+             final int tilesize = 3;
             // 显示爆炸概率
             Font font = Fonts.outline;
             font.setColor(explosionColor);
             font.draw("爆炸概率: " + (int)(explosionChance * 100) + "%",
 
                     x * tilesize + offset,
-                    y * tilesize - height * 0.5f,
+                    y * tilesize - height * 0.05f,
                     Align.center);
             font.setColor(Color.white);
         }

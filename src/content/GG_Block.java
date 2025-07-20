@@ -18,7 +18,16 @@ public class GG_Block {
     public static gailubao.gailubaoFactory GGxiaoxinggui;
     public static OreBlock oreZeta;
     public static OreBlock oreThuawu;
+    public static OreBlock oreGuijingti;
+    public static OreBlock oreTanhuanwuq;
     public static void Ore(){
+        oreGuijingti = new OreBlock("silicon-crystal-slag-wall"){{
+            itemDrop = Sijingti;
+            wallOre = true;//墙矿
+        }};
+        oreGuijingti = new OreBlock("silicon-crystal-slag"){{
+            itemDrop = Sijingti;
+        }};
         GGxiaoxinggui =new gailubao.gailubaoFactory("xiaoxinggui"){{
             requirements(Category.crafting,ItemStack.with(GGItems.Sijingti,150));
             outputItem = new ItemStack(Items.silicon,1);
@@ -32,18 +41,27 @@ public class GG_Block {
             consumePower(0.45f);//*100
             consumeItem(Sijingti, 5);
         }};
+        oreThuawu = new OreBlock("orethuawu-wall"){{
+            itemDrop = GGItems.ThuaKuangShi;
+           oreDefault = true;
+            //oreThreshold = 0.23f;
+           // oreScale = 9.0f;
+            wallOre = true;//墙矿
+        }};
         oreThuawu = new OreBlock("orethuawu"){{
             itemDrop = GGItems.ThuaKuangShi;
             oreDefault = true;
-            oreThreshold = 0.23f;
-            oreScale = 9.0f;
+            //oreThreshold = 0.23f;
+            // oreScale = 9.0f;
+            //wallOre = true;//墙矿
         }};
+
 
         oreZeta=new OreBlock("zeta"){{
             itemDrop = GGItems.zeta; // 掉落物（必须）
-            oreDefault = true;
-            oreThreshold = 0.71f;//控制矿石生成的稀疏程度。值越大（越接近1），矿石越稀少；值越小（越接近0），矿石越密集。
-            oreScale = 10.47619f;//控制矿石分布图案的频率。值越大，矿石分布越密集（图案更小更频繁）；值越小，矿石分布越稀疏（图案更大更平缓）
+          //  oreDefault = true;
+           // oreThreshold = 0.71f;//控制矿石生成的稀疏程度。值越大（越接近1），矿石越稀少；值越小（越接近0），矿石越密集。
+           // oreScale = 10.47619f;//控制矿石分布图案的频率。值越大，矿石分布越密集（图案更小更频繁）；值越小，矿石分布越稀疏（图案更大更平缓）
             variants = 3;//三种贴图在blocks/environment中
             //fullIcon=Core.atlas.find("custom-ores/ore_zeta");
         }};
