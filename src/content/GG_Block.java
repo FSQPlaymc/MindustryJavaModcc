@@ -23,7 +23,12 @@ public class GG_Block {
     public static void Ore(){
         oreCarbide =new OreBlock("carbide-wall",Items.carbide){{
             wallOre =true;
+            this.variants = 1;
         }};
+        oreCarbide =new OreBlock("carbide",Items.carbide){{
+            this.variants = 1;
+        }};
+
         oreGuijingti = new OreBlock("silicon-crystal-slag-wall"){{
             itemDrop = Sijingti;
             wallOre = true;//墙矿
