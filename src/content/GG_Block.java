@@ -10,6 +10,7 @@ import mindustry.type.ItemStack;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.production.GenericCrafter;
 
+import static content.GGItems.Sifenmo;
 import static content.GGItems.Sijingti;
 
 public class GG_Block {
@@ -30,20 +31,20 @@ public class GG_Block {
             wallOre =true;
             this.variants = 1;
         }};
-        oreCarbide =new OreBlock("carbide-wall",Items.carbide){{
+        oreCarbide =new OreBlock("carbide-wall",GGItems.ThuaKuangShi){{
             wallOre =true;
             this.variants = 1;
         }};
-        oreCarbide =new OreBlock("carbide",Items.carbide){{
+        oreCarbide =new OreBlock("carbide",GGItems.ThuaKuangShi){{
             this.variants = 1;
         }};
 
         oreGuijingti = new OreBlock("silicon-crystal-slag-wall"){{
-            itemDrop = Sijingti;
+            itemDrop = Sifenmo;
             wallOre = true;//墙矿
         }};
         oreGuijingti = new OreBlock("silicon-crystal-slag"){{
-            itemDrop = Sijingti;
+            itemDrop = Sifenmo;
             variants = 2;
         }};
         GGxiaoxinggui =new gailubao.gailubaoFactory("xiaoxinggui"){{

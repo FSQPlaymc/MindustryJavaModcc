@@ -12,6 +12,7 @@ public class GGItems {
     public static Item zeta;
     public static Item itemCZzw;
     public static Item Sijingti;
+    public static Item Sifenmo;
     public static Item ThuaKuangShi;
     public static Item TanNaMiHeXing;
     public static Item zaisu;
@@ -19,6 +20,9 @@ public class GGItems {
     public static final Seq<Item> GGItemsj = new Seq();
     public GGItems(){}
     public static void aloud(){
+        Sifenmo = new Item("sifenmo", Color.valueOf("031817")){{
+            this.hardness=3;
+        }};
         Sijingti = new Item("guijingti", Color.valueOf("031817")) {{
             this.hardness = 3;
             this.explosiveness = 0.0F;//爆炸 = 0.0F;可燃性
@@ -37,12 +41,15 @@ public class GGItems {
             this.flammability = 0.5f;
             this.explosiveness = 1.0f;
             this.charge =250.0f;
+            this.healthScaling = 3.1f;//建筑生命值倍率
         }};
         hejing=new Item("hexingjingti",Color.valueOf("a227ec")){{
             this.flammability= 3.0f;
             this.explosiveness = 15.0f;
             this.radioactivity = 13.0f;
             this.charge = 30.0f;
+            this.cost = 5.4f;//建筑建造时间值倍率
+            this.healthScaling = 1.0f;//建筑生命值倍率
         }};
         zeta=new Item("Zeta", Color.valueOf("e07123")){{//come from NewHorizon
             this.hardness=4;
@@ -58,7 +65,9 @@ public class GGItems {
             this.fullIcon = Core.atlas.find("Zwangzaozhiwu");
 
         }};
-        carbide.hardness=4;//碳化物
+        carbide.hardness=5;
+        surgeAlloy.healthScaling=1.5f;
+        surgeAlloy.hardness=4;
         GGItemsj.addAll(new Item[]{scrap, copper, lead, graphite, coal, titanium, thorium, silicon, plastanium,
                 phaseFabric, surgeAlloy, sporePod, sand, blastCompound, pyratite, metaglass,itemCZzw,hejing,ThuaKuangShi,TanNaMiHeXing,
                 Sijingti});
