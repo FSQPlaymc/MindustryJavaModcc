@@ -20,7 +20,16 @@ public class GG_Block {
     public static OreBlock oreThuawu;
     public static OreBlock oreGuijingti;
     public static OreBlock oreCarbide;
+    public static OreBlock oreSurge;
+    public static OreBlock oreHejing;
     public static void Ore(){
+        oreHejing = new OreBlock("hejing-wall",GGItems.hejing){{//巨浪合金
+            this.variants = 1;
+        }};
+        oreSurge = new OreBlock("surge-wall",Items.surgeAlloy){{//巨浪合金
+            wallOre =true;
+            this.variants = 1;
+        }};
         oreCarbide =new OreBlock("carbide-wall",Items.carbide){{
             wallOre =true;
             this.variants = 1;
