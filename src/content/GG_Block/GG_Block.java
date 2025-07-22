@@ -1,7 +1,8 @@
-package content;
+package content.GG_Block;
 
 
 import api.gailubao;
+import content.GGItems;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
@@ -24,7 +25,7 @@ public class GG_Block {
     public static OreBlock oreSurge;
     public static OreBlock oreHejing;
     public static void Ore(){
-        oreHejing = new OreBlock("hejing-wall",GGItems.hejing){{//巨浪合金
+        oreHejing = new OreBlock("hejing-wall", GGItems.hejing){{//巨浪合金
             this.variants = 1;
         }};
         oreSurge = new OreBlock("surge-wall",Items.surgeAlloy){{//巨浪合金
@@ -56,7 +57,7 @@ public class GG_Block {
             hasItems = true;//消耗物品
             hasLiquids = false;//消耗流体
             hasPower = true;//消耗电力
-            craftEffect = Fx.none;
+            craftEffect = Fx.trailFade;
             consumePower(0.45f);//*100
             consumeItem(Sijingti, 5);
         }};
