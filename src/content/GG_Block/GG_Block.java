@@ -8,6 +8,7 @@ import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
 import arc.math.Angles;
 import arc.math.Interp;
+import arc.struct.Seq;
 import content.GGItems;
 import mindustry.content.Fx;
 import mindustry.content.Items;
@@ -17,12 +18,14 @@ import mindustry.graphics.Layer;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.world.blocks.environment.OreBlock;
+import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.draw.DrawMulti;
 import mindustry.world.draw.DrawMulti.*;
 
 import static content.GGItems.Sifenmo;
 import static content.GGItems.Sijingti;
+import static mindustry.type.ItemStack.with;
 
 public class GG_Block {
 
@@ -34,10 +37,24 @@ public class GG_Block {
     public static OreBlock oreCarbide;
     public static OreBlock oreSurge;
     public static OreBlock oreHejing;
+    public static Drill luoxuanzuan;
     public static void Ore(){
+        luoxuanzuan =new Drill("luoxuanzuan"){{
+            requirements(Category.production, with(Items.copper, 35, Items.graphite, 30, Items.silicon, 30, Items.titanium, 20));
+            drillTime = 280;
+            size = 3;
+            hasPower = true;
+            tier = 4;
+            updateEffect = Fx.pulverizeMedium;
+            drillEffect = Fx.mineBig;
+            blockedItems = Seq.with(Sifenmo);//不挖的物品
+
+            consumePower(1.10f);
+            consumeLiquid(Liquids.water, 0.08f).boost();
+        }};
         factory sandCracker = new factory("sand-cracker") {{
             size = 2;
-            requirements(Category.crafting, ItemStack.with());
+            requirements(Category.crafting, with());
             health = 320;
             craftTime = 60f;
             itemCapacity = 60;
@@ -52,7 +69,7 @@ public class GG_Block {
                     Fill.circle(e.x + x, e.y + y, e.fout() * Fx.rand.random(1, 2.5f));
                 });
             }).layer(Layer.blockOver + 1); // 渲染层级：建筑上层
-
+addInput(GGItems.zeta,4);
             outputItem = new ItemStack(Items.sand, 12);
         }};
         oreHejing = new OreBlock("hejing-wall", GGItems.hejing){{//巨浪合金
@@ -79,7 +96,7 @@ public class GG_Block {
             variants = 2;
         }};
         GGxiaoxinggui =new gailubao.gailubaoFactory("xiaoxinggui"){{
-            requirements(Category.crafting,ItemStack.with(GGItems.Sijingti,150));
+            requirements(Category.crafting, with(GGItems.Sijingti,150));
             outputItem = new ItemStack(Items.silicon,1);
             craftTime = 60f;
             itemCapacity = 20;
@@ -116,7 +133,7 @@ public class GG_Block {
             //fullIcon=Core.atlas.find("custom-ores/ore_zeta");
         }};
         chuangZaolu = new GenericCrafter("chuangzaolu"){{//贴图在
-        requirements(Category.crafting, ItemStack.with(GGItems.zeta,30,
+        requirements(Category.crafting, with(GGItems.zeta,30,
                 Items.copper,50,
                 Items.surgeAlloy,10,
                 Items.silicon,40,
