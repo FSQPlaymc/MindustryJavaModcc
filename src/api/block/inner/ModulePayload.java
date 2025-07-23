@@ -6,7 +6,7 @@ import mindustry.world.Block;
 import mindustry.world.Tile;
 import mindustry.world.meta.BuildVisibility;
 import mindustry.world.meta.Stat;
-import newhorizon.content.blocks.ModuleBlock;
+//import newhorizon.content.blocks.ModuleBlock;
 
 public class ModulePayload extends Block {
     public ModulePayload(String name) {
@@ -21,11 +21,11 @@ public class ModulePayload extends Block {
         buildVisibility = BuildVisibility.shown;
     }
 
-    @Override
-    public void init() {
-        super.init();
-        ModuleBlock.modules.add(this);
-    }
+    //@Override
+   // public void init() {
+   //     super.init();
+    //    ModuleBlock.modules.add(this);
+    //}
 
     @Override
     public void setStats() {

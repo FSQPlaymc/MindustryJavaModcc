@@ -17,7 +17,7 @@ public class GG_Powers {
     public static SolarGenerator solarPanel;
     public static void Power(){
          solarPanel = new SolarGenerator("GG-solar-panel") {{
-            requirements(Category.power, ItemStack.with(Items.lead, 10, Items.silicon, 32));
+            requirements(Category.power, ItemStack.with(Items.lead, 20, Items.silicon, 32));
             powerProduction = 0.72f;
             this.size=2;
         }};

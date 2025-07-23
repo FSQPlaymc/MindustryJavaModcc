@@ -1,15 +1,25 @@
 package content.GG_Block;
 
 
+import api.factory;
 import api.gailubao;
+import arc.graphics.Color;
+import arc.graphics.g2d.Draw;
+import arc.graphics.g2d.Fill;
+import arc.math.Angles;
+import arc.math.Interp;
 import content.GGItems;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
+import mindustry.entities.Effect;
+import mindustry.graphics.Layer;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.production.GenericCrafter;
+import mindustry.world.draw.DrawMulti;
+import mindustry.world.draw.DrawMulti.*;
 
 import static content.GGItems.Sifenmo;
 import static content.GGItems.Sijingti;
@@ -25,6 +35,26 @@ public class GG_Block {
     public static OreBlock oreSurge;
     public static OreBlock oreHejing;
     public static void Ore(){
+        factory sandCracker = new factory("sand-cracker") {{
+            size = 2;
+            requirements(Category.crafting, ItemStack.with());
+            health = 320;
+            craftTime = 60f;
+            itemCapacity = 60;
+            hasPower = hasItems = true;
+            updateEffect = new Effect(80f, e -> { // 持续80帧的动态粒子效果
+                Fx.rand.setSeed(e.id); // 基于实体ID的随机种子
+                // 颜色插值：浅灰→灰，随进度变化
+                Draw.color(Color.lightGray, Color.gray, e.fin());
+                // 生成4个方向随机的粒子
+                Angles.randLenVectors(e.id, 4, 2.0F + 12.0F * e.fin(Interp.pow3Out), (x, y) -> {
+                    // 绘制圆形粒子，尺寸随进度减小
+                    Fill.circle(e.x + x, e.y + y, e.fout() * Fx.rand.random(1, 2.5f));
+                });
+            }).layer(Layer.blockOver + 1); // 渲染层级：建筑上层
+
+            outputItem = new ItemStack(Items.sand, 12);
+        }};
         oreHejing = new OreBlock("hejing-wall", GGItems.hejing){{//巨浪合金
             this.variants = 1;
         }};
