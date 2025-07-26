@@ -1,18 +1,23 @@
 package api;
 
+import api.type.Recipe;
 import arc.scene.ui.layout.Table;
+import arc.struct.Seq;
 import arc.util.Log;
 import mindustry.ui.Styles;
 import mindustry.world.blocks.production.GenericCrafter;
 
 
 public class ls extends GenericCrafter {
-
+    public Seq<Recipe> recipes = new Seq<>();
     public ls(String name) {
         super(name);
         configurable = true; // 必须启用配置功能才能显示按钮
     }
-
+    public void addInputs(Object...objects) {
+        Recipe recipe = new Recipe(objects);
+        recipes.add(recipe);
+    }
     public class CustomCrafterBuild extends GenericCrafterBuild {
 
         // 按钮点击逻辑示例：重置生产进度

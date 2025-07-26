@@ -33,6 +33,10 @@ public abstract class factory extends AdaptCrafter {
 
         consume(new ConsumeRecipe(RecipeGenericCrafterBuild::getRecipe, RecipeGenericCrafterBuild::getDisplayRecipe));
     }
+    public void addInput(Object...objects) {
+        Recipe recipe = new Recipe(objects);
+        recipes.add(recipe);
+    }
 
     @Override
     public void setStats() {
@@ -41,10 +45,6 @@ public abstract class factory extends AdaptCrafter {
         stats.remove(Stat.output);
     }
 
-    public void addInput(Object...objects) {
-        Recipe recipe = new Recipe(objects);
-        recipes.add(recipe);
-    }
 
     public StatValue display() {
         return table -> {
