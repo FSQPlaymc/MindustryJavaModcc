@@ -10,6 +10,7 @@ import arc.struct.Seq;
 import arc.util.*;
 import mindustry.core.UI;
 import mindustry.ctype.UnlockableContent;
+import mindustry.gen.Building;
 import mindustry.gen.Icon;
 import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
@@ -24,7 +25,7 @@ import api.type.Recipe;
 import static mindustry.world.meta.StatValues.stack;
 import static mindustry.world.meta.StatValues.withTooltip;
 
-public class factory extends AdaptCrafter {
+public abstract class factory extends AdaptCrafter {
     public Seq<Recipe> recipes = new Seq<>();
 
     public factory(String name) {

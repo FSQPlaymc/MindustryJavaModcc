@@ -3,6 +3,9 @@ package content.GG_Block;
 
 import api.factory;
 import api.gailubao;
+import api.ls;
+import api.more_factory;
+import arc.Input;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
@@ -31,6 +34,7 @@ public class GG_Block {
 
     public static GenericCrafter chuangZaolu;
     public static gailubao.gailubaoFactory GGxiaoxinggui;
+    public static ls GGd;
     public static OreBlock oreZeta;
     public static OreBlock oreThuawu;
     public static OreBlock oreGuijingti;
@@ -39,6 +43,23 @@ public class GG_Block {
     public static OreBlock oreHejing;
     public static Drill luoxuanzuan;
     public static void Ore(){
+        GGd= new ls("cs") {{
+            requirements(Category.crafting, with(GGItems.zeta,30,
+                    Items.copper,50,
+                    Items.surgeAlloy,10,
+                    Items.silicon,40,
+                    Items.titanium,70,
+                    Items.plastanium,30
+            ));
+            craftTime = 300f;//生产时间
+            itemCapacity = 20;//物品数
+            hasItems = true;//消耗物品
+            size=3;
+            consumeItem(GGItems.zeta, 10);
+            //consumeLiquid(Liquids.oil, 1.9f);
+            outputItem=new ItemStack(Items.coal,43);
+        }};
+
         luoxuanzuan =new Drill("luoxuanzuan"){{
             requirements(Category.production, with(Items.copper, 35, Items.graphite, 30, Items.silicon, 30, Items.titanium, 20));
             drillTime = 280;
@@ -54,11 +75,12 @@ public class GG_Block {
         }};
         factory sandCracker = new factory("sand-cracker") {{
             size = 2;
-            requirements(Category.crafting, with());
+            requirements(Category.crafting, with(Items.silicon,28,Items.copper,36,Items.lead,17,Items.graphite,24));
             health = 320;
-            craftTime = 60f;
+            craftTime = 50f;
             itemCapacity = 60;
             hasPower = hasItems = true;
+            consumePower(0.4f);
             updateEffect = new Effect(80f, e -> { // 持续80帧的动态粒子效果
                 Fx.rand.setSeed(e.id); // 基于实体ID的随机种子
                 // 颜色插值：浅灰→灰，随进度变化
@@ -69,8 +91,10 @@ public class GG_Block {
                     Fill.circle(e.x + x, e.y + y, e.fout() * Fx.rand.random(1, 2.5f));
                 });
             }).layer(Layer.blockOver + 1); // 渲染层级：建筑上层
-addInput(GGItems.zeta,4);
-            outputItem = new ItemStack(Items.sand, 12);
+addInput(Sifenmo,6,Items.coal,2);
+addInput(Sifenmo,5,Liquids.oil,0.17f);
+addInput(Items.silicon,1,Items.coal,2);
+            outputItem = new ItemStack(Sijingti, 2);
         }};
         oreHejing = new OreBlock("hejing-wall", GGItems.hejing){{//巨浪合金
             this.variants = 1;
@@ -96,7 +120,7 @@ addInput(GGItems.zeta,4);
             variants = 2;
         }};
         GGxiaoxinggui =new gailubao.gailubaoFactory("xiaoxinggui"){{
-            requirements(Category.crafting, with(GGItems.Sijingti,150));
+            requirements(Category.crafting, with(Sijingti,150));
             outputItem = new ItemStack(Items.silicon,1);
             craftTime = 60f;
             itemCapacity = 20;
