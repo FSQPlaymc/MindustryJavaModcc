@@ -1,31 +1,38 @@
 package api;
 
-import arc.struct.Seq;
-import mindustry.ctype.UnlockableContent;
 import mindustry.type.*;
 
 public class NewRecipe {
-    public static NewRecipe empty = new NewRecipe();
-    public Seq<ItemStack> inputItem = new Seq<>();
-    public Seq<LiquidStack> inputLiquid = new Seq<>();
-    public Seq<PayloadStack> inputPayload = new Seq<>();
+    public String name;
+    public ItemStack[] inputItems;       // 物品输入
+    public LiquidStack[] inputLiquids;   // 多流体输入
+    public ItemStack[] outputItems;      // 物品输出
+    public LiquidStack[] outputLiquids;  // 多流体输出
+    public float craftTime;
+    public float powerUse;
 
-    public float boostScl = 1f;
-    public float craftScl = 1f;
+    // 全参数构造函数（支持多物品+多流体）
+    public NewRecipe(String name, ItemStack[] inputItems, LiquidStack[] inputLiquids,
+                     ItemStack[] outputItems, LiquidStack[] outputLiquids,
+                     float craftTime, float powerUse) {
+        this.name = name;
+        this.inputItems = inputItems;
+        this.inputLiquids = inputLiquids;
+        this.outputItems = outputItems;
+        this.outputLiquids = outputLiquids;
+        this.craftTime = craftTime;
+        this.powerUse = powerUse;
+    }
 
-    public NewRecipe(Object...objects){
-        for (int i = 0; i < objects.length / 2; i++){
-            if (objects[i * 2] instanceof Item item && objects[i * 2 + 1] instanceof Integer count){
-                inputItem.add(new ItemStack(item, count));
-            }else if (objects[i * 2] instanceof Liquid liquid && objects[i * 2 + 1] instanceof Float count){
-                inputLiquid.add(new LiquidStack(liquid, count));
-            }else if (objects[i * 2] instanceof UnlockableContent payload && objects[i * 2 + 1] instanceof Integer count){
-                inputPayload.add(new PayloadStack(payload, count));
-            }
-        }
-
-        if (objects.length % 2 != 0 && objects[objects.length - 1] instanceof Float multiplier){
-            boostScl = multiplier;
-        }
+    // 简化构造（单物品+单流体输入）
+    public NewRecipe(String name, ItemStack inputItem, LiquidStack inputLiquid,
+                     ItemStack outputItem, LiquidStack outputLiquid,
+                     float craftTime, float powerUse) {
+        this(name,
+                new ItemStack[]{inputItem},
+                new LiquidStack[]{inputLiquid},
+                new ItemStack[]{outputItem},
+                new LiquidStack[]{outputLiquid},
+                craftTime, powerUse);
     }
 }

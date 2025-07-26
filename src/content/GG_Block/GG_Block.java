@@ -55,6 +55,7 @@ public class GG_Block {
             itemCapacity = 20;//物品数
             hasItems = true;//消耗物品
             size=3;
+            new Recipe("dwada",( ItemStack(Items.copper,2)) );
             consumeItem(GGItems.zeta, 10);
             //consumeLiquid(Liquids.oil, 1.9f);
             outputItem=new ItemStack(Items.coal,43);
