@@ -14,6 +14,10 @@ import mindustry.ui.ReqImage;
 import mindustry.ui.Styles;
 import mindustry.world.Tile;
 import mindustry.world.blocks.production.GenericCrafter;
+import mindustry.world.consumers.Consume;
+import mindustry.world.consumers.ConsumeItems;
+import mindustry.world.consumers.ConsumeLiquid;
+import mindustry.world.consumers.ConsumePower;
 
 public class ls extends GenericCrafter {
     public Seq<NewRecipe> recipes = new Seq<>();
@@ -24,6 +28,24 @@ public class ls extends GenericCrafter {
         saveConfig = true;
         sync = true;
         hasLiquids = true; // 确保启用液体存储
+        // 允许接受物品和液体输入
+        acceptsItems = true;
+    }
+    public void init() {
+        super.init();
+        // 为所有配方的输入物品和液体设置过滤
+        recipes.each(recipe -> {
+            if (recipe.inputItems != null) {
+                for (ItemStack stack : recipe.inputItems) {
+                    itemFilter[stack.item.id] = true; // 允许该物品输入
+                }
+            }
+            if (recipe.inputLiquids != null) {
+                for (LiquidStack stack : recipe.inputLiquids) {
+                    liquidFilter[stack.liquid.id] = true; // 允许该液体输入
+                }
+            }
+        });
     }
 
     public void addRecipe(String name,
@@ -75,10 +97,17 @@ public class ls extends GenericCrafter {
 
     public class CustomCrafterBuild extends GenericCrafterBuild {
         public int currentRecipe = 0;
+        // 1. 定义控制变量（新增这行）
+        private boolean needsRecipeUpdate = false;
 
         @Override
         public void updateTile() {
-            applyCurrentRecipe();
+            // 只在需要时调用applyCurrentRecipe()，例如配方切换时才调用，而非每次更新都调用
+            // 若必须每次更新都检查配方，需添加条件避免重复执行
+            if (needsRecipeUpdate) { // 用一个布尔变量控制，配方切换时设为true
+                applyCurrentRecipe();
+                needsRecipeUpdate = false;
+            }
             super.updateTile();
         }
 
@@ -89,38 +118,51 @@ public class ls extends GenericCrafter {
             NewRecipe recipe = recipes.get(currentRecipe);
 
             craftTime = recipe.craftTime;
-            outputItem = recipe.outputItems.length > 0 ? recipe.outputItems[0] : null;
-            //consumeItem(Items.a);
+            // 移除单物品输出设置（避免父类逻辑冲突）
 
-            if (recipe.inputItems != null) {
-                for (ItemStack stack : recipe.inputItems) {
-                    consumeItem(stack.item, stack.amount);
-                }
+            // 1. 计算新消耗的总数量（物品组+液体+电力）
+            int newSize = 0;
+            if (recipe.inputItems != null && recipe.inputItems.length > 0) newSize += 1; // 物品组算1项
+            if (recipe.inputLiquids != null) newSize += recipe.inputLiquids.length;
+            newSize += 1; // 电力消耗
+
+            // 2. 创建新的消耗数组（替代clear()）
+            Consume[] newConsumers = new Consume[newSize];
+            int index = 0;
+
+            // 3. 添加物品消耗（使用ConsumeItems，支持多个物品）
+            if (recipe.inputItems != null && recipe.inputItems.length > 0) {
+                newConsumers[index++] = new ConsumeItems(recipe.inputItems){{
+                    update = true;
+                }};
             }
 
+            // 4. 添加液体消耗
             if (recipe.inputLiquids != null) {
                 for (LiquidStack stack : recipe.inputLiquids) {
-                    consumeLiquid(stack.liquid, stack.amount);
+                    newConsumers[index++] = new ConsumeLiquid(stack.liquid, stack.amount){{
+                        update = true;
+                        //perSecond = true;
+                    }};
                 }
             }
 
-            consumePower(recipe.powerUse);
+            // 5. 添加电力消耗
+            newConsumers[index] = new ConsumePower(recipe.powerUse,45.4f,false){{
 
+                update = true;
+            }};
+
+            // 6. 用新数组替换旧消耗数组
+            block.consumers = newConsumers;
+
+            // 刷新消耗状态
+            //updateTile();
+            //progress = 0f;
         }
 
-        @Override
-        public void craft() {
-            super.craft();
-            NewRecipe recipe = recipes.get(currentRecipe);
 
-            // 仅保留流体存储功能，移除主动输出逻辑
-            if (recipe.outputLiquids != null && hasLiquids) {
-                for (LiquidStack stack : recipe.outputLiquids) {
-                    // 直接存储到自身液体容器，超过容量时会自动截断
-                    liquids.add(stack.liquid, stack.amount);
-                }
-            }
-        }
+
 
         @Override
         public void buildConfiguration(Table table) {
@@ -183,7 +225,7 @@ public class ls extends GenericCrafter {
                                 });
                             }, Styles.flatToggleMenut, () -> {
                                 currentRecipe = index;
-                                applyCurrentRecipe();
+                                needsRecipeUpdate = true; // 配方切换时设置标志
                                 configure((byte) index);
                             }).update(btn -> btn.setChecked(index == currentRecipe))
                             .pad(2f).fillX().row();

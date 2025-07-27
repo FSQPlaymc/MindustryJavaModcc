@@ -62,6 +62,15 @@ public class GG_Block {
                 60f, // 制造时间（60 ticks，1秒）
                 1f // 电力消耗（1单位/秒）
         );
+        myCrafter.addRecipe(
+                "铜→铅换", // 配方名称
+                new ItemStack[]{new ItemStack(Items.coal, 2)}, // 物品输入（2个铜）
+                new LiquidStack[]{new LiquidStack(Liquids.water, 1f)}, // 流体输入（1单位水/周期）
+                new ItemStack[]{new ItemStack(Items.surgeAlloy, 1)}, // 物品输出（1个铅）
+                new LiquidStack[]{new LiquidStack(Liquids.water, 0.5f)}, // 流体输出（0.5单位污泥/周期）
+                60f, // 制造时间（60 ticks，1秒）
+                1f // 电力消耗（1单位/秒）
+        );
 
 
         luoxuanzuan =new Drill("luoxuanzuan"){{
