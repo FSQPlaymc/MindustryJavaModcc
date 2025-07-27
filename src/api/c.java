@@ -6,7 +6,7 @@ import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.consumers.ConsumeLiquid;
 
 public class c extends GenericCrafter {
-    public Seq<more_factory.Recipe> recipes = new Seq<>();
+    public Seq<NewRecipe> recipes = new Seq<>();
     // 默认配方索引
     public int defaultRecipe = 0;
     public c(String name) {
@@ -49,7 +49,7 @@ public class cs extends GenericCrafter.GenericCrafterBuild {
 
     public void applyCurrentRecipe() {
         if (recipes.size > 0) {
-            more_factory.Recipe recipe = recipes.get(currentRecipe);
+
 
             // 设置消耗和产出
             //consume.clear();
@@ -57,16 +57,9 @@ consume();
 
 
             // 设置电力消耗
-            consumePower(recipe.powerUse);
 
-            // 设置产出
-            outputItem = recipe.output;
-
-            // 设置生产时间
-            craftTime = recipe.craftTime;
-            if (recipe.liquid != null) {
 
             }
         }
     }
-}}
+}

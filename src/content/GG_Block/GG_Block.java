@@ -4,8 +4,6 @@ package content.GG_Block;
 import api.factory;
 import api.gailubao;
 import api.ls;
-import api.more_factory;
-import arc.Input;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
@@ -20,11 +18,10 @@ import mindustry.entities.Effect;
 import mindustry.graphics.Layer;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
+import mindustry.type.LiquidStack;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.production.GenericCrafter;
-import mindustry.world.draw.DrawMulti;
-import mindustry.world.draw.DrawMulti.*;
 
 import static content.GGItems.Sifenmo;
 import static content.GGItems.Sijingti;
@@ -39,27 +36,33 @@ public class GG_Block {
     public static OreBlock oreThuawu;
     public static OreBlock oreGuijingti;
     public static OreBlock oreCarbide;
+    public static ls myCrafter;
     public static OreBlock oreSurge;
     public static OreBlock oreHejing;
     public static Drill luoxuanzuan;
     public static void Ore(){
-        GGd= new ls("cs") {{
-            requirements(Category.crafting, with(GGItems.zeta,30,
-                    Items.copper,50,
-                    Items.surgeAlloy,10,
-                    Items.silicon,40,
-                    Items.titanium,70,
-                    Items.plastanium,30
-            ));
+        myCrafter = new ls("custom-crafter") {{
+            // 配置基础属性
+            requirements(Category.crafting, with(Items.copper, 50, Items.lead, 30)); // 建造所需材料
+            size = 2; // 尺寸（2x2）
+            health = 300; // 生命值
+            itemCapacity = 50; // 物品容量
+            liquidCapacity = 1000f; // 流体容量（重要：需设置才能存储流体）
             craftTime = 300f;//生产时间
-            itemCapacity = 20;//物品数
+            hasPower = true; // 是否需要电力
             hasItems = true;//消耗物品
-            size=3;
-            new Recipe("dwada",( ItemStack(Items.copper,2)) );
-            consumeItem(GGItems.zeta, 10);
-            //consumeLiquid(Liquids.oil, 1.9f);
-            outputItem=new ItemStack(Items.coal,43);
+            hasLiquids = true;//消耗流体
         }};
+        myCrafter.addRecipe(
+                "铜→铅转换", // 配方名称
+                new ItemStack[]{new ItemStack(Items.copper, 2)}, // 物品输入（2个铜）
+                new LiquidStack[]{new LiquidStack(Liquids.water, 1f)}, // 流体输入（1单位水/周期）
+                new ItemStack[]{new ItemStack(Items.lead, 1)}, // 物品输出（1个铅）
+                new LiquidStack[]{new LiquidStack(Liquids.water, 0.5f)}, // 流体输出（0.5单位污泥/周期）
+                60f, // 制造时间（60 ticks，1秒）
+                1f // 电力消耗（1单位/秒）
+        );
+
 
         luoxuanzuan =new Drill("luoxuanzuan"){{
             requirements(Category.production, with(Items.copper, 35, Items.graphite, 30, Items.silicon, 30, Items.titanium, 20));
