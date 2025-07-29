@@ -4,25 +4,22 @@ import arc.graphics.Color;
 import arc.math.Mathf;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
-import mindustry.gen.Building;
 //import mindustry.gen.Direction;
-import mindustry.type.Item;
 import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
 import mindustry.ui.Bar;
 import mindustry.ui.ReqImage;
 import mindustry.ui.Styles;
-import mindustry.world.Tile;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.consumers.Consume;
 import mindustry.world.consumers.ConsumeItems;
 import mindustry.world.consumers.ConsumeLiquid;
 import mindustry.world.consumers.ConsumePower;
 
-public class ls extends GenericCrafter {
+public class lss extends GenericCrafter {
     public Seq<NewRecipe> recipes = new Seq<>();
 
-    public ls(String name) {
+    public lss(String name) {
         super(name);
         configurable = true;
         saveConfig = true;
@@ -97,17 +94,21 @@ public class ls extends GenericCrafter {
 
     public class CustomCrafterBuild extends GenericCrafterBuild {
         public int currentRecipe = 0;
-        // 1. 定义控制变量（新增这行）
         private boolean needsRecipeUpdate = false;
+
+        // 直接使用实例变量存储配方配置（不依赖父类getter）
+        private Consume[] consumers; // 替代父类的consumers
+        private float craftTime;     // 替代父类的craftTime
+        private ItemStack outputItem;// 替代父类的outputItem
 
         @Override
         public void updateTile() {
-            // 只在需要时调用applyCurrentRecipe()，例如配方切换时才调用，而非每次更新都调用
-            // 若必须每次更新都检查配方，需添加条件避免重复执行
-            if (needsRecipeUpdate) { // 用一个布尔变量控制，配方切换时设为true
+            if (needsRecipeUpdate) {
                 applyCurrentRecipe();
                 needsRecipeUpdate = false;
             }
+
+            // 移除对consValid的依赖，直接在生产前检查消耗
             super.updateTile();
         }
 
@@ -117,54 +118,103 @@ public class ls extends GenericCrafter {
             currentRecipe = Mathf.clamp(currentRecipe, 0, recipes.size - 1);
             NewRecipe recipe = recipes.get(currentRecipe);
 
+            // 直接修改实例变量
             craftTime = recipe.craftTime;
-            // 移除单物品输出设置（避免父类逻辑冲突）
+            outputItem = recipe.outputItems.length > 0 ? recipe.outputItems[0] : null;
 
-            // 1. 计算新消耗的总数量（物品组+液体+电力）
+            // 计算消耗数组大小
             int newSize = 0;
-            if (recipe.inputItems != null && recipe.inputItems.length > 0) newSize += 1; // 物品组算1项
-            if (recipe.inputLiquids != null) newSize += recipe.inputLiquids.length;
-            newSize += 1; // 电力消耗
+            if (recipe.inputItems.length > 0) newSize++;
+            if (recipe.inputLiquids.length > 0) newSize += recipe.inputLiquids.length;
+            if (recipe.powerUse > 0) newSize++;
 
-            // 2. 创建新的消耗数组（替代clear()）
+            // 构建消耗数组
             Consume[] newConsumers = new Consume[newSize];
             int index = 0;
 
-            // 3. 添加物品消耗（使用ConsumeItems，支持多个物品）
-            if (recipe.inputItems != null && recipe.inputItems.length > 0) {
+            if (recipe.inputItems.length > 0) {
                 newConsumers[index++] = new ConsumeItems(recipe.inputItems){{
                     update = true;
                 }};
             }
 
-            // 4. 添加液体消耗
-            if (recipe.inputLiquids != null) {
+            if (recipe.inputLiquids.length > 0) {
                 for (LiquidStack stack : recipe.inputLiquids) {
                     newConsumers[index++] = new ConsumeLiquid(stack.liquid, stack.amount){{
                         update = true;
-                        //perSecond = true;
                     }};
                 }
             }
 
-            // 5. 添加电力消耗
-            newConsumers[index] = new ConsumePower(recipe.powerUse,45.4f,false){{
+            if (recipe.powerUse > 0) {
+                newConsumers[index++] = new ConsumePower(recipe.powerUse / 60f, 1f, false){{
+                    update = true;
+                }};
+            }
 
-                update = true;
-            }};
+            // 验证消耗数组无null
+            for (Consume cons : newConsumers) {
+                if (cons == null) {
+                    throw new RuntimeException("Consumers array contains null! Recipe: " + recipe.name);
+                }
+            }
 
-            // 6. 用新数组替换旧消耗数组
-            block.consumers = newConsumers;
+            // 直接赋值给实例的consumers变量
+            //this.consumers = newConsumers;
+            this.consumers = newConsumers;
+            progress = 0f; // 仅重置进度，移除consValid相关代码
+        }
 
-            // 刷新消耗状态
-            //updateTile();
-            //progress = 0f;
+        // 替换原validateConsumers方法，使用正确的消耗检查方式
+//        private boolean checkConsumers() {
+//            if (consumers == null) return false;
+//            // 假设Consume的正确检查方法是isValid()，而非valid()
+//            for (Consume cons : consumers) {
+//                // 若isValid()仍不存在，可尝试cons.getValidator().validate(this)
+//                if (cons == null || !cons.getClass()) {
+//                    return false;
+//                }
+//            }
+//            return true;
+//        }
+
+
+
+
+        public void craft() {
+            super.craft();
+            NewRecipe recipe = recipes.get(currentRecipe);
+            if (recipe == null) return;
+
+            // 处理物品输出（循环卸载，每次1个）
+            if (recipe.outputItems != null) {
+                for (ItemStack stack : recipe.outputItems) {
+                    int amount = stack.amount; // 需要输出的总数量
+                    // 循环调用 offload()，每次卸载1个，直到完成指定数量
+                    for (int i = 0; i < amount; i++) {
+                        offload(stack.item); // 正确用法：仅传入物品类型
+                    }
+                }
+            }
+            // 处理流体输出（支持多流体）
+            if (recipe.outputLiquids != null) {
+                for (LiquidStack stack : recipe.outputLiquids) {
+                    // 检查流体存储是否有空间
+                    float remaining = liquidCapacity - liquids.get(stack.liquid);
+                    if (remaining >= stack.amount - 0.001f) {
+                        liquids.add(stack.liquid, stack.amount);
+                    } else {
+                        // 空间不足时尝试卸载到相邻建筑
+                        dumpLiquid(stack.liquid, stack.amount);
+                    }
+                }
+            }
         }
 
 
 
 
-        @Override
+
         public void buildConfiguration(Table table) {
             table.table(Styles.black5, t -> {
                 t.add("配方选择").color(Color.yellow).center().row();
@@ -224,11 +274,10 @@ public class ls extends GenericCrafter {
                                     }
                                 });
                             }, Styles.flatToggleMenut, () -> {
-                                currentRecipe = index;
-                                needsRecipeUpdate = true; // 配方切换时设置标志
-                                configure((byte) index);
-                            }).update(btn -> btn.setChecked(index == currentRecipe))
-                            .pad(2f).fillX().row();
+                        // 切换配方时标记需要更新
+                        currentRecipe = index;
+                        needsRecipeUpdate = true;
+                    }).size(200, 60).pad(2f).row();
                 }
             }).fillX();
         }
@@ -248,6 +297,13 @@ public class ls extends GenericCrafter {
                         )).growX().row();
                     }
                 });
+            }
+        }
+        @Override
+        public void configure(Object value) {
+            if (value instanceof Byte) {
+                currentRecipe = (byte) value;
+                needsRecipeUpdate = true;
             }
         }
     }

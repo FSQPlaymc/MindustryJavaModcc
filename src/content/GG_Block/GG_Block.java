@@ -3,7 +3,7 @@ package content.GG_Block;
 
 import api.factory;
 import api.gailubao;
-import api.ls;
+import api.ls.adasd;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
@@ -31,46 +31,70 @@ public class GG_Block {
 
     public static GenericCrafter chuangZaolu;
     public static gailubao.gailubaoFactory GGxiaoxinggui;
-    public static ls GGd;
+    //public static lsd GGd;
     public static OreBlock oreZeta;
     public static OreBlock oreThuawu;
     public static OreBlock oreGuijingti;
     public static OreBlock oreCarbide;
-    public static ls myCrafter;
+    public static adasd myCrafter;
     public static OreBlock oreSurge;
     public static OreBlock oreHejing;
     public static Drill luoxuanzuan;
     public static void Ore(){
-        myCrafter = new ls("custom-crafter") {{
-            // 配置基础属性
-            requirements(Category.crafting, with(Items.copper, 50, Items.lead, 30)); // 建造所需材料
-            size = 2; // 尺寸（2x2）
-            health = 300; // 生命值
-            itemCapacity = 50; // 物品容量
-            liquidCapacity = 1000f; // 流体容量（重要：需设置才能存储流体）
-            craftTime = 300f;//生产时间
-            hasPower = true; // 是否需要电力
-            hasItems = true;//消耗物品
-            hasLiquids = true;//消耗流体
+        myCrafter = new adasd("advanced-factory") {{
+            requirements(Category.crafting, with(GGItems.zeta,30,
+                    Items.copper,50,
+                    Items.surgeAlloy,10,
+                    Items.silicon,40,
+                    Items.titanium,70,
+                    Items.plastanium,30
+            ));
+            // 设置工厂的基本属性
+            itemCapacity = 20;//物品数
+            liquidCapacity=30f;
+            health = 1000; // 生命值
+            size = 3;      // 尺寸（3x3格）
+            localizedName = "高级工厂"; // 显示名称
+            description = "可以生产多种物品的高级工厂，支持多配方切换。";
+
+            // 2. 添加配方
+            // 配方1：生产金属碎片
+            addRecipe(
+                    "金属碎片生产",
+                    new ItemStack[]{new ItemStack(Items.copper, 2)}, // 输入：2铜
+                    new LiquidStack[]{new LiquidStack(Liquids.water, 10)}, // 输入：10水
+                    new ItemStack[]{new ItemStack(Items.scrap, 3)}, // 输出：3金属碎片
+                    null,
+                    67f, // 生产时间4秒
+                    20f // 电力消耗20单位/分钟
+            );
+
+            // 配方2：生产塑料
+            addRecipe(
+                    "塑料生产",
+                    new ItemStack[]{new ItemStack(Items.coal, 1), new ItemStack(Items.lead, 1)}, // 输入：1煤+1铅
+                    new LiquidStack[]{new LiquidStack(Liquids.oil, 15)}, // 输入：15油
+                    new ItemStack[]{new ItemStack(Items.plastanium, 1)}, // 输出：1塑料
+                    null,
+                    6f, // 生产时间6秒
+                    40f // 电力消耗40单位/分钟
+            );
+
+            // 配方3：生产冷却液
+            addRecipe(
+                    "冷却液生产",
+                    (ItemStack[]) null,
+                    new LiquidStack[]{
+                            new LiquidStack(Liquids.water, 30),
+                            new LiquidStack(Liquids.oil, 5)
+                    }, // 输入：30水+5汞
+                    null,
+                    new LiquidStack[]{new LiquidStack(Liquids.cryofluid, 20)}, // 输出：20冷却液
+                    8f, // 生产时间8秒
+                    30f // 电力消耗30单位/分钟
+            );
         }};
-        myCrafter.addRecipe(
-                "铜→铅转换", // 配方名称
-                new ItemStack[]{new ItemStack(Items.copper, 2)}, // 物品输入（2个铜）
-                new LiquidStack[]{new LiquidStack(Liquids.water, 1f)}, // 流体输入（1单位水/周期）
-                new ItemStack[]{new ItemStack(Items.lead, 1)}, // 物品输出（1个铅）
-                new LiquidStack[]{new LiquidStack(Liquids.water, 0.5f)}, // 流体输出（0.5单位污泥/周期）
-                60f, // 制造时间（60 ticks，1秒）
-                1f // 电力消耗（1单位/秒）
-        );
-        myCrafter.addRecipe(
-                "铜→铅换", // 配方名称
-                new ItemStack[]{new ItemStack(Items.coal, 2)}, // 物品输入（2个铜）
-                new LiquidStack[]{new LiquidStack(Liquids.water, 1f)}, // 流体输入（1单位水/周期）
-                new ItemStack[]{new ItemStack(Items.surgeAlloy, 1)}, // 物品输出（1个铅）
-                new LiquidStack[]{new LiquidStack(Liquids.water, 0.5f)}, // 流体输出（0.5单位污泥/周期）
-                60f, // 制造时间（60 ticks，1秒）
-                1f // 电力消耗（1单位/秒）
-        );
+
 
 
         luoxuanzuan =new Drill("luoxuanzuan"){{
