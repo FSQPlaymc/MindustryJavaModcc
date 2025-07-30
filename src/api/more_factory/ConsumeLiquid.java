@@ -1,4 +1,4 @@
-package api.ls;
+package api.more_factory;
 
 import mindustry.gen.Building;
 import mindustry.type.Liquid;
@@ -16,14 +16,14 @@ public class ConsumeLiquid implements Consume {
     @Override
     public boolean valid(Building build) {
         // 检查液体容器是否有足够的液体
-        adasd.CustomCrafterBuild crafter = (adasd.CustomCrafterBuild) build;
+        MFactory.CustomCrafterBuild crafter = (MFactory.CustomCrafterBuild) build;
         return crafter.liquids.get(liquid) >= amount;
     }
     
     @Override
     public void consume(Building build) {
         // 实际消耗液体
-        adasd.CustomCrafterBuild crafter = (adasd.CustomCrafterBuild) build;
+        MFactory.CustomCrafterBuild crafter = (MFactory.CustomCrafterBuild) build;
         crafter.liquids.remove(liquid, amount);
     }
 }

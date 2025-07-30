@@ -1,4 +1,4 @@
-package api.ls;
+package api.more_factory;
 
 // 新增电力连接辅助类，解决Building与PowerGraph的关联问题
 public class PowerLink {

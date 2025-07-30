@@ -1,20 +1,7 @@
-package api.ls;
+package api.more_factory;
 
-import arc.graphics.Color;
-import arc.math.Mathf;
-import arc.scene.ui.layout.Table;
-import arc.struct.Seq;
 //import mindustry.gen.Direction;
-import mindustry.type.ItemStack;
-import mindustry.type.LiquidStack;
-import mindustry.ui.Bar;
-import mindustry.ui.ReqImage;
-import mindustry.ui.Styles;
-import mindustry.world.blocks.production.GenericCrafter;
-import mindustry.world.consumers.Consume;
-import mindustry.world.consumers.ConsumeItems;
-import mindustry.world.consumers.ConsumeLiquid;
-import mindustry.world.consumers.ConsumePower;
+
 
 //import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 //import static mindustry.world.meta.StatValues.items;

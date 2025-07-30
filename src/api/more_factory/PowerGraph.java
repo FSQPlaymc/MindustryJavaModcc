@@ -1,4 +1,4 @@
-package api.ls;
+package api.more_factory;
 
 public class PowerGraph {
     // 电力存储相关属性

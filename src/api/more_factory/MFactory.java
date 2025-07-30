@@ -1,4 +1,4 @@
-package api.ls;
+package api.more_factory;
 
 import arc.graphics.Color;
 import arc.math.Mathf;
@@ -12,27 +12,14 @@ import mindustry.ui.Styles;
 import mindustry.world.blocks.production.GenericCrafter;
 
 
-import arc.graphics.Color;
-import arc.math.Mathf;
-import arc.scene.ui.layout.Table;
-import arc.struct.Seq;
-import mindustry.gen.Building;
-import mindustry.type.Item;
-import mindustry.type.ItemStack;
-import mindustry.type.LiquidStack;
-import mindustry.ui.Bar;
-import mindustry.ui.ReqImage;
-import mindustry.ui.Styles;
-import mindustry.world.blocks.production.GenericCrafter;
-import mindustry.world.consumers.Consume;
 import mindustry.world.consumers.ConsumePower;
 
 //import static com.sun.org.apache.xalan.internal.lib.ExsltMath.power;
 
-public class adasd extends GenericCrafter {
+public class MFactory extends GenericCrafter {
     public Seq<NewRecipe> recipes = new Seq<>();
 
-    public adasd(String name) {
+    public MFactory(String name) {
         super(name);
         configurable = true;
         saveConfig = true;
@@ -91,6 +78,7 @@ public class adasd extends GenericCrafter {
     }
 
     public class CustomCrafterBuild extends GenericCrafterBuild {
+        public float liquidCapacity = 100f; // 示例值，可根据游戏平衡调整
         public int currentRecipe = 0;
         private boolean needsRecipeUpdate = false;
         private float currentCraftTime = craftTime;

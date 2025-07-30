@@ -1,5 +1,5 @@
 // 自定义建筑类，继承自mindustry的Building并添加电力支持
-package api.ls;
+package api.more_factory;
 
 import mindustry.gen.Building;
 

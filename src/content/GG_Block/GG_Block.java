@@ -1,9 +1,10 @@
 package content.GG_Block;
 
 
+import api.DirectionalLiquidUnloader;
 import api.factory;
 import api.gailubao;
-import api.ls.adasd;
+import api.more_factory.MFactory;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
@@ -28,7 +29,7 @@ import static content.GGItems.Sijingti;
 import static mindustry.type.ItemStack.with;
 
 public class GG_Block {
-
+public static DirectionalLiquidUnloader gasd;
     public static GenericCrafter chuangZaolu;
     public static gailubao.gailubaoFactory GGxiaoxinggui;
     //public static lsd GGd;
@@ -36,12 +37,20 @@ public class GG_Block {
     public static OreBlock oreThuawu;
     public static OreBlock oreGuijingti;
     public static OreBlock oreCarbide;
-    public static adasd myCrafter;
+    public static MFactory myCrafter;
     public static OreBlock oreSurge;
     public static OreBlock oreHejing;
     public static Drill luoxuanzuan;
     public static void Ore(){
-        myCrafter = new adasd("advanced-factory") {{
+        gasd=new DirectionalLiquidUnloader("fesef"){{
+            requirements(Category.distribution, with(Items.copper, 20));
+            health = 120;
+            speed = 4f;
+            //solid = false;
+            underBullets = true;
+            //regionRotated1 = 1;
+        }};
+        myCrafter = new MFactory("advanced-factory") {{
             requirements(Category.crafting, with(GGItems.zeta,30,
                     Items.copper,50,
                     Items.surgeAlloy,10,
@@ -68,7 +77,6 @@ public class GG_Block {
                     67f, // 生产时间4秒
                     20f // 电力消耗20单位/分钟
             );
-
             // 配方2：生产塑料
             addRecipe(
                     "塑料生产",
@@ -94,7 +102,7 @@ public class GG_Block {
                     30f // 电力消耗30单位/分钟
             );
         }};
-
+//new LiquidRouter
 
 
         luoxuanzuan =new Drill("luoxuanzuan"){{
@@ -115,7 +123,7 @@ public class GG_Block {
             requirements(Category.crafting, with(Items.silicon,28,Items.copper,36,Items.lead,17,Items.graphite,24));
             health = 320;
             craftTime = 50f;
-            itemCapacity = 60;
+            itemCapacity = 60;//最大物品容量
             hasPower = hasItems = true;
             consumePower(0.4f);
             updateEffect = new Effect(80f, e -> { // 持续80帧的动态粒子效果

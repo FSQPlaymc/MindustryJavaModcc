@@ -1,4 +1,4 @@
-package api.ls;
+package api.more_factory;
 
 import mindustry.gen.Building;
 import mindustry.type.ItemStack;
@@ -14,7 +14,7 @@ public class ConsumeItems implements Consume {
     @Override
     public boolean valid(Building build) {
         // 检查建筑是否有足够的物品
-        adasd.CustomCrafterBuild crafter = (adasd.CustomCrafterBuild) build;
+        MFactory.CustomCrafterBuild crafter = (MFactory.CustomCrafterBuild) build;
         for (ItemStack stack : items) {
             if (crafter.items.get(stack.item) < stack.amount) {
                 return false;
@@ -26,7 +26,7 @@ public class ConsumeItems implements Consume {
     @Override
     public void consume(Building build) {
         // 实际消耗物品
-        adasd.CustomCrafterBuild crafter = (adasd.CustomCrafterBuild) build;
+        MFactory.CustomCrafterBuild crafter = (MFactory.CustomCrafterBuild) build;
         for (ItemStack stack : items) {
             crafter.items.remove(stack.item, stack.amount);
         }

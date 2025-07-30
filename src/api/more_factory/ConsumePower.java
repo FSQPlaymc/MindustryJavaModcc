@@ -1,6 +1,5 @@
-package api.ls;
+package api.more_factory;
 
-import api.ls.CustomBuilding;
 import mindustry.gen.Building;
 
 // 修正后的电力消耗实现类
