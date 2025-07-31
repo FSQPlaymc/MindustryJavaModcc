@@ -4,6 +4,9 @@ import arc.graphics.Color;
 import arc.math.Mathf;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
+import arc.util.io.Reads;
+import arc.util.io.Writes;
+import mindustry.gen.Building;
 import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
 import mindustry.ui.Bar;
@@ -26,7 +29,16 @@ public class MFactory extends GenericCrafter {
         sync = true;
         hasLiquids = true;
         acceptsItems = true;
-        consume(new ConsumePower(0f, 0f, false));
+        //consume(new ConsumePower(0f, 0f, false));
+        consume(new ConsumePower(0f,0f,false)); // 初始值，后续通过配方动态更新
+        config(int.class, (build, value) -> {
+            if (build instanceof CustomCrafterBuild) {
+                CustomCrafterBuild crafter = (CustomCrafterBuild) build;
+                crafter.currentRecipe = value;
+                crafter.needsRecipeUpdate = true;
+            }
+        });
+
     }
 
     public void init() {
@@ -78,6 +90,7 @@ public class MFactory extends GenericCrafter {
     }
 
     public class CustomCrafterBuild extends GenericCrafterBuild {
+
         public float liquidCapacity = 100f; // 示例值，可根据游戏平衡调整
         public int currentRecipe = 0;
         private boolean needsRecipeUpdate = false;
@@ -180,7 +193,7 @@ public class MFactory extends GenericCrafter {
             // 消耗电力（基于配方需求）
             if (recipe.powerUse > 0) {
                 // 这里使用电力状态作为消耗依据，实际消耗已在电力网络中处理
-                power.status = Math.max(0, power.status - (recipe.powerUse / 60f) / currentCraftTime);
+                power.status = Math.max(0, power.status - (recipe.powerUse ) );
             }
         }
         private Object[] instanceConsumers;
@@ -214,12 +227,10 @@ public class MFactory extends GenericCrafter {
 
 
             // 电力消耗更新
+            // 修复：通过 ConsumePower 接口消耗电力，关联 PowerGraph
             if (recipe.powerUse > 0) {
-                activePowerConsumer = new ConsumePower(recipe.powerUse / 60f, 0f, false);
-            } else {
-                activePowerConsumer = null;
-            }
-        }
+                MFactory.this.consume(new ConsumePower((recipe.powerUse / 60f),2f,false)) ;// 关联 CustomBuilding 的 PowerGraph
+        }}
 
         public boolean consValid() {
             if (recipes.isEmpty()) return false;
@@ -310,13 +321,9 @@ public class MFactory extends GenericCrafter {
         }
 
         @Override
-
-
-
-
-
-
+        //public int currentRecipe = 0;
         public void buildConfiguration(Table table) {
+
             table.table(Styles.black5, t -> {
                 t.add("配方选择").color(Color.yellow).center().row();
                 t.image().color(Color.gray).height(2f).fillX().pad(5f).row();
@@ -329,7 +336,7 @@ public class MFactory extends GenericCrafter {
                                         Styles.flatToggleMenut, () -> {
                                             currentRecipe = index;
                                             needsRecipeUpdate = true;
-                                            configure((byte) index);
+                                            configure(index);
                                         }).update(btn -> btn.setChecked(index == currentRecipe))
                                 .pad(2f).fillX().row();
                     } else {
@@ -337,7 +344,7 @@ public class MFactory extends GenericCrafter {
                                         Styles.flatToggleMenut, () -> {
                                             currentRecipe = index;
                                             needsRecipeUpdate = true;
-                                            configure((byte) index);
+                                            configure(index);
                                         }).update(btn -> btn.setChecked(index == currentRecipe))
                                 .pad(2f).fillX();
                     }
@@ -401,7 +408,20 @@ public class MFactory extends GenericCrafter {
                 }
             });
         }
+        @Override
+        public void read(Reads read, byte revision) {
+            super.read(read, revision);
+            // 读取保存的配方索引（与 config 方法注册的类型一致）
+            currentRecipe = read.i();
+            needsRecipeUpdate = true; // 加载后触发配方更新
+        }
 
+        @Override
+        public void write(Writes write) {
+            super.write(write);
+            // 写入当前配方索引
+            write.i(currentRecipe);
+        }
 
     }
 }

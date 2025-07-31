@@ -49,6 +49,7 @@ public static DirectionalLiquidUnloader gasd;
             //solid = false;
             underBullets = true;
             //regionRotated1 = 1;
+            consumePower(0.3f);
         }};
         myCrafter = new MFactory("advanced-factory") {{
             requirements(Category.crafting, with(GGItems.zeta,30,
