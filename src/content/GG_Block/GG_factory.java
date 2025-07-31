@@ -1,6 +1,8 @@
 package content.GG_Block;
 
 import api.factory;
+import content.GGItems;
+import content.GG_Liquids;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.type.Category;
@@ -12,8 +14,21 @@ import static mindustry.type.ItemStack.with;
 
 public class GG_factory {
     public static factory SmallGlassKiln;
-
+    public static factory SGfacto;
     public static void factory(){
+        SGfacto=new factory("plastanium-factory"){{
+            health = 180;
+            size=3;
+            craftTime=74f;
+            itemCapacity=20;
+            requirements(Category.crafting, with(Items.silicon,34, GGItems.Sijingti,12,Items.metaglass,17,Items.graphite,24));
+            hasPower = hasItems =hasLiquids =true;
+            consumePower(3.6f);
+            addInput(Items.beryllium,5,Liquids.oil,0.5f);
+            outputItem = new ItemStack(Items.plastanium,1);
+            outputLiquid =new LiquidStack(GG_Liquids.os,1f);
+        }};
+
         SmallGlassKiln=new factory("smallkiln") {{
 size=2;
             requirements(Category.crafting, with(Items.silicon,16,Items.beryllium,36,Items.lead,17,Items.graphite,24));

@@ -12,6 +12,7 @@ public class gzMod extends  Mod{
 
     @Override
     public void loadContent() {
+        GG_Liquids.GGLiquids();
         GGItems.aloud();//加载方式
         GGNewPT.NewP();
         GG_Block.Ore();
