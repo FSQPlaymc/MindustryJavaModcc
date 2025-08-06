@@ -26,7 +26,7 @@ public class GG_factory {
             hasPower = hasItems =hasLiquids =true;
             consumePower(0.75f);//*60
             addInput(Items.sporePod,3);
-            outputLiquid=new LiquidStack(Liquids.oil,0.6666f);
+            outputLiquid=new LiquidStack(Liquids.oil,0.6667f);
         }};
         surgeAlloyF = new factory("surgeslloy") {{
             health =260;
