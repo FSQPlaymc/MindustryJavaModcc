@@ -8,15 +8,18 @@ import mindustry.content.Liquids;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
+import mindustry.world.blocks.defense.Wall;
 
 import static mindustry.type.ItemStack.with;
 
 public class GG_factory {
+    public static Wall cs;
     public static factory SmallGlassKiln;
     public static factory SGfacto;
     public static factory surgeAlloyF;
     public static factory baozif;
     public static void factory(){
+        cs =new Wall("cs");
         baozif=new factory("baozifsc"){{
             size=2;
             health=210;
