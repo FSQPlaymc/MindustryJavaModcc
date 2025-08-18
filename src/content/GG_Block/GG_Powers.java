@@ -1,5 +1,6 @@
 package content.GG_Block;
 
+import api.block.power.NC_power;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
@@ -13,9 +14,22 @@ import mindustry.world.consumers.ConsumeItemFlammable;
 import mindustry.world.draw.*;
 
 public class GG_Powers {
+    public static NC_power ffff;
     public  static ConsumeGenerator reanshaoshi;
     public static SolarGenerator solarPanel;
     public static void Power(){
+        ffff=new NC_power("ffff"){{
+            requirements(Category.power, ItemStack.with(Items.lead, 20, Items.silicon, 32));
+            this.heating=0.002f;
+            size=2;
+            health = 700;
+            itemDuration = 360f;
+            powerProduction = 15f;
+            heating = 0.02f;
+
+            consumeItem(Items.thorium);
+            consumeLiquid(Liquids.cryofluid, heating / coolantPower).update(false);
+        }};
          solarPanel = new SolarGenerator("GG-solar-panel") {{
             requirements(Category.power, ItemStack.with(Items.lead, 20, Items.silicon, 32));
             powerProduction = 0.72f;

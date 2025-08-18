@@ -13,17 +13,11 @@ import mindustry.world.blocks.defense.Wall;
 import static mindustry.type.ItemStack.with;
 
 public class GG_factory {
-    public static Wall cs;
-    public static Wall SL;
-    public static Wall fanying;
     public static factory SmallGlassKiln;
     public static factory SGfacto;
     public static factory surgeAlloyF;
     public static factory baozif;
     public static void factory(){
-        fanying=new Wall("fanyingdanyuan");
-        cs =new Wall("cs");
-        SL =new Wall("sl");
         baozif=new factory("baozifsc"){{
             size=2;
             health=210;
