@@ -1,10 +1,7 @@
 package content.GG_Block;
 
 
-import api.DirectionalLiquidUnloader;
-import api.GG_HX;
-import api.factory;
-import api.gailubao;
+import api.*;
 import api.more_factory.MFactory;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
@@ -35,6 +32,7 @@ public static DirectionalLiquidUnloader gasd;
     public static gailubao.gailubaoFactory GGxiaoxinggui;
     //public static lsd GGd;
     public static GG_HX hx;
+    public static GG_HXg ghg;
     public static OreBlock oreZeta;
     public static OreBlock oreThuawu;
     public static OreBlock oreGuijingti;
@@ -44,6 +42,12 @@ public static DirectionalLiquidUnloader gasd;
     public static OreBlock oreHejing;
     public static Drill luoxuanzuan;
     public static void Ore(){
+        ghg=new GG_HXg("g1hx"){{
+            requirements(Category.effect,with(Items.copper,4000,Items.lead,4000,Items.carbide,200, Sijingti,1000));
+            size=4;
+            incinerateNonBuildable = false; // 是否销毁不可建造物品
+            health=4500;
+        }};
         hx=new GG_HX("hx"){{
             requirements(Category.effect, with(Items.copper, 3000, Items.lead, 3000, Items.silicon, 2000));
             isFirstTier=true; // 是否为一级核心（初始核心）

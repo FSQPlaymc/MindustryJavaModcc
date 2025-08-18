@@ -160,13 +160,13 @@ public class AdaptCrafter extends GenericCrafter implements MultiBlock {
 
     @Override
     public void flipRotation(BuildPlan req, boolean x) {
-        if (canMirror) {
-            if (mirrorBlock() != null) {
-                req.rotation = rotations[req.rotation + (x ? 0 : 4)];
-            }
-        } else {
-            super.flipRotation(req, x);
-        }
+       if (canMirror) {
+           if (mirrorBlock() != null) {
+               req.rotation = rotations[req.rotation + (x ? 0 : 4)];
+           }
+       } else {
+           super.flipRotation(req, x);
+       }
     }
 
     public class AdaptCrafterBuild extends GenericCrafterBuild implements MultiBlockEntity {

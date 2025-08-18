@@ -1,14 +1,18 @@
 package content.GG_Block;
 
 import api.factory;
+import api.more_factory.ConsumePower;
 import content.GGItems;
 import content.GG_Liquids;
+import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
 import mindustry.world.blocks.defense.Wall;
+import mindustry.world.blocks.production.GenericCrafter;
+import mindustry.world.draw.*;
 
 import static mindustry.type.ItemStack.with;
 
@@ -17,16 +21,44 @@ public class GG_factory {
     public static factory SGfacto;
     public static factory surgeAlloyF;
     public static factory baozif;
+    public static GenericCrafter ksbl;
     public static void factory(){
+        ksbl=new GenericCrafter("kesug"){{
+            requirements(Category.crafting,with(Items.copper,23,Items.beryllium,28,GGItems.Sijingti,25,Items.lead,12,Items.plastanium,12));
+            hasItems=true;
+            hasLiquids=hasPower=true;
+            size=4;
+            health=1350;
+            craftTime=50;
+            consumePower(3.56f);
+            consumeItems(with(Items.plastanium, 2,Items.metaglass,3));
+            consumeLiquid(Liquids.water,(float) 1 /6);
+            outputLiquid=new LiquidStack(GG_Liquids.zaos, (float) 2 /60);
+        }};
         baozif=new factory("baozifsc"){{
+            this.canMirror=false;
             size=2;
-            health=210;
+            health=1000;
             craftTime=90f;
             itemCapacity=20;
             requirements(Category.crafting,with(GGItems.Sijingti,22,Items.metaglass,16,Items.lead,24,Items.copper,25));
             hasPower = hasItems =hasLiquids =true;
             consumePower(0.75f);//*60
-            addInput(Items.sporePod,3);
+           consumeItem(Items.sporePod,3);
+            craftEffect = Fx.none;
+            rotate = false;//贴图不转
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"){{
+                        buildingRotate = false;//贴图不转
+                    }},
+                    new DrawPistons(){{
+                        sinMag = 1f;
+                    }},
+                    new DrawDefault(),
+                    new DrawLiquidRegion(),
+                    new DrawRegion("-top"){{buildingRotate = false;}}
+            );
+
             outputLiquid=new LiquidStack(Liquids.oil,0.6667f);
         }};
         surgeAlloyF = new factory("surgeslloy") {{

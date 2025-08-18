@@ -3,6 +3,7 @@ package content;
 import content.GG_Block.GG_Block;
 import content.GG_Block.GG_Powers;
 import content.GG_Block.GG_factory;
+import content.GG_Block.GG_walls;
 import mindustry.mod.Mod;
 
 public class gzMod extends  Mod{
@@ -13,6 +14,7 @@ public class gzMod extends  Mod{
     @Override
     public void loadContent() {
         GG_Liquids.GGLiquids();
+        GG_walls.walls();
         GGItems.aloud();//加载方式
         GGNewPT.NewP();
         GG_Block.Ore();

@@ -30,7 +30,7 @@ public abstract class factory extends AdaptCrafter {
 
     public factory(String name) {
         super(name);
-
+        this.canMirror=true;//是否镜像
         consume(new ConsumeRecipe(RecipeGenericCrafterBuild::getRecipe, RecipeGenericCrafterBuild::getDisplayRecipe));
     }
     public void addInput(Object...objects) {

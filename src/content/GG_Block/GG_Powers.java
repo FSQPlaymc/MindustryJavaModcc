@@ -20,7 +20,8 @@ public class GG_Powers {
     public static void Power(){
         ffff=new NC_power("ffff"){{
             requirements(Category.power, ItemStack.with(Items.lead, 20, Items.silicon, 32));
-            this.heating=0.002f;
+            ambientSound = Sounds.hum;
+            ambientSoundVolume = 0.24f;
             size=2;
             health = 700;
             itemDuration = 360f;
