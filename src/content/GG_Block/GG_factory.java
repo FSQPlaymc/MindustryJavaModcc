@@ -2,11 +2,13 @@ package content.GG_Block;
 
 import api.factory;
 import api.more_factory.ConsumePower;
+import arc.graphics.Color;
 import content.GGItems;
 import content.GG_Liquids;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
+import mindustry.gen.Sounds;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
@@ -28,6 +30,10 @@ public class GG_factory {
             hasItems=true;
             hasLiquids=hasPower=true;
             size=4;
+            craftEffect = Fx.smeltsmoke;
+            drawer = new DrawMulti(new DrawDefault(), new DrawFlame(Color.valueOf("ffef99")));
+            ambientSound = Sounds.smelter;//环境音效
+            ambientSoundVolume = 0.07f;//环境音效大小
             health=1350;
             craftTime=50;
             consumePower(3.56f);

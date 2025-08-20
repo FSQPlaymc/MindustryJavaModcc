@@ -15,7 +15,7 @@ public class GG_walls {
             requirements(Category.defense, ItemStack.with(Items.lead, 20));
             size=2;
         }};
-        fanying=new Wall("fanyingdanyuan"){{
+        fanying=new Wall("fanying"){{
             requirements(Category.defense, ItemStack.with(Items.lead, 20));
             size=2;
         }};
