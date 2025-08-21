@@ -230,7 +230,7 @@ public class NC_power extends NuclearReactor {
                     }else if (neighboru != null && neighboru.block == GG_walls.SL){
                         asdf[S][L]=1;
                         SQQL+=0.6f;
-                        SQQ+=0.6F* Math.min(this.delta(), 4.0F)* NC_power.this.heating;//测试用
+                        SQQ+=0.6F;//测试用
                         //this.heat += 1+((DWS-1)*0.8) * NC_power.this.heating * Math.min(this.delta(), 4.0F);
                         System.out.println(SQQ);
                     }else if (neighboru != null && neighboru.block == GG_walls.fanying){
@@ -267,51 +267,84 @@ public class NC_power extends NuclearReactor {
                 boolean tj1,tj2;
                 int w,s,a,d;
                 xiaolu=fare=0;
-                for (int i=1;i<1024;i++){
-                    w=s=a=d=0;
-                    tj1=tj2=false;
-                    int e=asdf[S][L];
-                    if (L==0||S==0||L==(FL -1)||S== (FS -1)){
-                        if (e!=90) {
-                            System.out.println("出问题"+S);
-                            System.out.println("出问题"+L);
-                            System.out.println("出问题"+asdf[S][L]);
-                            SDQ=99999999;
-                            DWS=0;
+                    for (int i = 1; i < 1024; i++) {
+                        tj1 = tj2 = false;
+                        int e = asdf[S][L];
+                        if (L == 0 || S == 0 || L == (FL - 1) || S == (FS - 1)) {
+                            if (e != 90) {
+                                System.out.println("出问题" + S);
+                                System.out.println("出问题" + L);
+                                System.out.println("出问题" + asdf[S][L]);
+                                SDQ = 99999999;
+                                DWS = 0;
+                                break;
+                            }
+                        } else if (e == 80) {
+                            CV = 0;
+                            w = asdf[S - 1][L];
+                            if (w == 80) CV++;
+                            s = asdf[S + 1][L];
+                            if (s == 80) CV++;
+                            a = asdf[S][L - 1];
+                            if (a == 80) CV++;
+                            d = asdf[S][L + 1];
+                            if (d == 80) CV++;
+                            xiaolu += (CV + 1) * NC_power.this.basepower;
+                            fare += ((float) ((CV + 1) * (CV + 2)) / 2) * NC_power.this.baseheat;
+                            //System.out.println("没问题");
+                        } else if (e == 81) {
+                            w = asdf[S - 1][L];
+                            s = asdf[S + 1][L];
+                            a = asdf[S][L - 1];
+                            d = asdf[S][L + 1];
+                            if (d == 80||a == 80||s == 80||w == 80) asdf[S][L] = 91;
+                        }
+                        L++;//宽
+                        if (L > (FL - 1)) {
+                            L = 0;
+                            S++;
+                            if (S > (FS - 1)) {//高
+                                System.out.println("数组跳出检测");
+                                System.out.println(Arrays.deepToString(asdf));
+                                S=0;
+                                break;
+                            }
+                        }
+                    }
+                for (int i = 1; i < 1024; i++) {
+                    tj1 = tj2 = false;
+                    int e = asdf[S][L];
+                    if (L == 0 || S == 0 || L == (FL - 1) || S == (FS - 1)) {
+                        if (e != 90) {
+                            System.out.println("出问题" + S);
+                            System.out.println("出问题" + L);
+                            System.out.println("出问题" + asdf[S][L]);
+                            SDQ = 99999999;
+                            DWS = 0;
                             break;
                         }
-                    }else if (e==80) {
-                        CV=0;
-                         w=asdf[S-1][L];if (w==80)CV++;
-                         s=asdf[S+1][L];if (s==80)CV++;
-                         a=asdf[S][L-1];if (a==80)CV++;
-                         d=asdf[S][L+1];if (d==80)CV++;
-                         xiaolu+=(CV+1)*NC_power.this.basepower;
-                         fare += ((float) ((CV + 1) * (CV + 2)) / 2) * NC_power.this.baseheat;
-                        //System.out.println("没问题");
-                    }else if (e==81){
-                        w=asdf[S-1][L];if (w==80)asdf[S][L]=91;
-                        s=asdf[S+1][L];if (s==80)asdf[S][L]=91;
-                        a=asdf[S][L-1];if (a==80)asdf[S][L]=91;
-                        d=asdf[S][L+1];if (d==80)asdf[S][L]=91;
-                    }else if (e==2){//hongshi
-                        w=asdf[S-1][L];
-                        s=asdf[S+1][L];
-                        a=asdf[S][L-1];
-                        d=asdf[S][L+1];
-                        if (d==91||w==91||s==91||a==91){
+                    } else if (e == 2) {//hongshi
+                        w = asdf[S - 1][L];
+                        s = asdf[S + 1][L];
+                        a = asdf[S][L - 1];
+                        d = asdf[S][L + 1];
+                        if (d == 91 || w == 91 || s == 91 || a == 91) {
                             asdf[S][L] = 3;
-                            tj1=true;}
+                            tj1 = true;
+                        }
                         if (tj1) {
                             SQQL+= GG_walls.hongshi.colod;
-                            SQQ += GG_walls.hongshi.colod * Math.min(this.delta(), 4.0F) * NC_power.this.heating;}
+                            SQQ += GG_walls.hongshi.colod ;
+                        }
                     }
                     L++;//宽
-                    if (L>(FL -1)){
-                        L=0;
-                        S++;if (S> (FS -1)){//高
-                            System.out.println("数组跳出检测");
+                    if (L > (FL - 1)) {
+                        L = 0;
+                        S++;
+                        if (S > (FS - 1)) {//高
+                            System.out.println("数组跳出检测2");
                             System.out.println(Arrays.deepToString(asdf));
+                            S=0;
                             break;
                         }
                     }
@@ -330,7 +363,7 @@ public class NC_power extends NuclearReactor {
             // 计时器逻辑：每隔 UPDATE_INTERVAL 时间触发一次
             // 1. 获取当前燃料（钍）的数量，计算燃料满度（占总容量的比例）
             int fuel = this.items.get(NC_power.this.fuelItem);
-            float fullness = (float)(1+((DWS-1)*0.8));
+            float fullness = fare;
             this.productionEfficiency = xiaolu; // 发电效率与燃料满度挂钩
             // 2. 燃料燃烧逻辑：若有燃料且反应堆启用，则产生热量并消耗燃料
             if (fuel > 0 && this.enabled) {
@@ -345,10 +378,11 @@ public class NC_power extends NuclearReactor {
                 // 无燃料或未启用时，发电效率为0
                 this.productionEfficiency = 0.0F;
             }
+            float asd=SQQ* Math.min(this.delta(), 4.0F) * NC_power.this.heating;
             // 原代码：heat -= SQQ;
-            heat -= SQQ; // 关联每帧时间
+            heat -= asd; // 关联每帧时间
             // 3. 冷却逻辑：若有冷却液，消耗冷却液并降低热量
-            SDQ= (1+((DWS-1)*0.8f)-SQQL);
+            SDQ= fare-SQQL;
             if (this.heat > 0.0F) {
                 // 计算最大可使用的冷却剂量（不超过当前液体量，且不超过当前热量可冷却的量）
                 float maxUsed = Math.min(this.liquids.currentAmount(), this.heat / coolantPower);
