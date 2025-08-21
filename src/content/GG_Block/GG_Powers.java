@@ -1,6 +1,7 @@
 package content.GG_Block;
 
 import api.block.power.NC_power;
+import arc.graphics.Color;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
@@ -27,7 +28,9 @@ public class GG_Powers {
             itemDuration = 360f;
             powerProduction = 15f;
             heating = 0.02f;
-
+            drawer = new DrawMulti(new DrawDefault(),  new DrawRegion("-top"){{
+                buildingRotate = false;//贴图不转
+            }});
             consumeItem(Items.thorium);
             consumeLiquid(Liquids.cryofluid, heating / coolantPower).update(false);
         }};
