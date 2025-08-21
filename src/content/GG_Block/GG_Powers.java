@@ -28,6 +28,7 @@ public class GG_Powers {
             itemDuration = 360f;
             powerProduction = 15f;
             heating = 0.02f;
+            this.basepower=1.3f;
             drawer = new DrawMulti(new DrawDefault(),  new DrawRegion("-top"){{
                 buildingRotate = false;//贴图不转
             }});

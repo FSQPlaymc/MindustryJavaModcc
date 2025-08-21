@@ -20,6 +20,7 @@ public class gzMod extends  Mod{
         GG_Block.Ore();
         GG_factory.factory();
         GG_Powers.Power();
+        GG_units.units();
         //Itemschange.chi();
         // 实例化 foreshadow 炮台
 }}
