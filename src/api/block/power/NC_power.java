@@ -22,8 +22,9 @@ import mindustry.world.meta.BlockFlag;
 import java.util.Arrays;
 
 public class NC_power extends NuclearReactor {
-    public float baseheat;
-    public float basepower;
+        public float baseheat;
+        public float basepower;
+        public float cold;
         public final int timerFuel;
         public Color lightColor;
         public Color coolColor;
@@ -38,6 +39,7 @@ public class NC_power extends NuclearReactor {
         public TextureRegion lightsRegion;
     public NC_power(String name) {
         super(name);
+        this.cold=1;
         this.baseheat=1.0f;
         this.basepower=1.0f;
         update = true;
@@ -79,7 +81,9 @@ public class NC_power extends NuclearReactor {
     private int[][] asdf;
     private int checkX;
     private int DWS;//单元数
-    private float SQQ,SQQL,fare,xiaolu =0;//冷却量
+    private float SQQ;
+    private float fare;
+    private float xiaolu =0;//冷却量
     private int checkY;
     private float SDQ;
     @Override
@@ -194,7 +198,6 @@ public class NC_power extends NuclearReactor {
 
                 // 再创建新数组
                 asdf =new int[FS][FL];
-                SQQL=0;
                 DWS=0;
                 SQQ=0f;
                 int L=0;
@@ -217,7 +220,6 @@ public class NC_power extends NuclearReactor {
                             asdf[S][L] = 90;
                         } else if (neighboru != null && neighboru.block == GG_walls.SL) {
                             asdf[S][L] = 1;
-                            SQQL += 0.6f;
                             SQQ += 0.6F;//测试用
                             //this.heat += 1+((DWS-1)*0.8) * NC_power.this.heating * Math.min(this.delta(), 4.0F);
                             System.out.println(SQQ);
@@ -335,7 +337,6 @@ public class NC_power extends NuclearReactor {
                                 tj1 = true;
                             }
                             if (tj1) {
-                                SQQL += GG_walls.shiying.colod;
                                 SQQ += GG_walls.shiying.colod;
                             }
                         } else if (e == 2) {//hongshi
@@ -348,7 +349,6 @@ public class NC_power extends NuclearReactor {
                                 tj1 = true;
                             }
                             if (tj1) {
-                                SQQL += GG_walls.hongshi.colod;
                                 SQQ += GG_walls.hongshi.colod;
                             }
                         } else if (e == 6) {//qinjingshi
@@ -364,7 +364,6 @@ public class NC_power extends NuclearReactor {
                             }
                             if (tj1 && tj2) {
                                 asdf[S][L] = 7;
-                                SQQL += GG_walls.qinjingshi.colod;
                                 SQQ += GG_walls.qinjingshi.colod;
                             }
                         } else if (e == 8) {//yinshi
@@ -379,7 +378,6 @@ public class NC_power extends NuclearReactor {
                             if (d == 91) CV++;
                             if (CV > 1) {
                                 asdf[S][L] = 9;
-                                SQQL += GG_walls.ynishi.colod;
                                 SQQ += GG_walls.ynishi.colod;
                             }
                         } else if (e == 10) {//linbin
@@ -393,7 +391,6 @@ public class NC_power extends NuclearReactor {
                             d = asdf[S][L + 1];
                             if (d == 80) CV++;
                             if (CV > 1) {
-                                SQQL += GG_walls.linbin.colod;
                                 SQQ += GG_walls.linbin.colod;
                             }
                         } else if (e == 12) {//lubaoshi
@@ -409,7 +406,7 @@ public class NC_power extends NuclearReactor {
                             }
                             if (tj1 && tj2) {
                                 //asdf[S][L] = 7;
-                                SQQL += GG_walls.lubaoshi.colod;
+                                //SQQL += GG_walls.lubaoshi.colod;
                                 SQQ += GG_walls.lubaoshi.colod;
                             }
                         }
@@ -436,6 +433,7 @@ public class NC_power extends NuclearReactor {
             }
         @Override
         public void updateTile(){
+                float coldc=SQQ*cold;
                 this.productionEfficiency=0.0f;
                 //super.updateTile();
             // 计时器逻辑：每隔 UPDATE_INTERVAL 时间触发一次
@@ -456,11 +454,11 @@ public class NC_power extends NuclearReactor {
                 // 无燃料或未启用时，发电效率为0
                 this.productionEfficiency = 0.0F;
             }
-            float asd=SQQ* Math.min(this.delta(), 4.0F) * NC_power.this.heating;
+            float asd=coldc* Math.min(this.delta(), 4.0F) * NC_power.this.heating;
             // 原代码：heat -= SQQ;
             heat -= asd; // 关联每帧时间
             // 3. 冷却逻辑：若有冷却液，消耗冷却液并降低热量
-            SDQ= fare-SQQL;
+            SDQ= fare-coldc;
             if (this.heat > 0.0F) {
                 // 计算最大可使用的冷却剂量（不超过当前液体量，且不超过当前热量可冷却的量）
                 float maxUsed = Math.min(this.liquids.currentAmount(), this.heat / coolantPower);

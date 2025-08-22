@@ -23,8 +23,20 @@ public class GG_factory {
     public static factory SGfacto;
     public static factory surgeAlloyF;
     public static factory baozif;
-    public static GenericCrafter ksbl;
+    public static GenericCrafter ksbl,sitichun;
     public static void factory(){
+        sitichun=new GenericCrafter("guitichunchang"){{
+            requirements(Category.crafting,with(Items.copper,43,Items.beryllium,38,GGItems.Sijingti,50,Items.lead,32,Items.plastanium,12));
+            size=3;
+            health=500;
+            craftTime=120;
+            hasItems=true;
+            hasPower=true;
+            consumePower(50/6f);
+            consumeItems(with(Items.sporePod,6,Items.coal,16,Items.lead,18,Items.sand,22));
+            outputItem=new ItemStack(Items.silicon,20);
+
+        }};
         ksbl=new GenericCrafter("kesug"){{
             requirements(Category.crafting,with(Items.copper,23,Items.beryllium,28,GGItems.Sijingti,25,Items.lead,12,Items.plastanium,12));
             hasItems=true;
