@@ -12,32 +12,86 @@ import mindustry.gen.Sounds;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
-import mindustry.world.blocks.defense.Wall;
+import mindustry.world.blocks.production.AttributeCrafter;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.draw.*;
+import mindustry.world.meta.Attribute;
+import mindustry.world.meta.Env;
 
 import static mindustry.type.ItemStack.with;
 
 public class GG_factory {
+    public static AttributeCrafter cultivator;
     public static factory SmallGlassKiln;
     public static factory SGfacto;
     public static factory surgeAlloyF;
-    public static factory baozif;
-    public static GenericCrafter ksbl,sitichun;
-    public static void factory(){
+    public static factory baozif,TnmXinpian;
+    public static GenericCrafter ksbl,sitichun,Ctiqu;
+    public static void factorys(){
+        cultivator = new AttributeCrafter("cultivator"){{
+            requirements(Category.production, with(Items.graphite,24, GGItems.Sijingti, 25, Items.silicon, 10,Items.plastanium,12));
+            outputItem = new ItemStack(Items.sporePod, 5);
+            craftTime = 100;
+            size = 3;
+            hasLiquids = true;
+            hasPower = true;
+            hasItems = true;
+
+            liquidCapacity = 80f;
+            craftEffect = Fx.none;
+            envRequired |= Env.spores;
+            attribute = Attribute.spores;
+
+            legacyReadWarmup = true;
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"),
+                    new DrawLiquidTile(Liquids.water),
+                    new DrawDefault(),
+                    new DrawCultivator(),
+                    new DrawRegion("-top")
+            );
+            maxBoost = 2f;
+
+            consumePower(320f / 60f);
+            consumeLiquid(Liquids.water, 54f / 60f);
+        }};
+        TnmXinpian=new factory("纳米芯片打印机"){{
+            hasItems=hasPower=true;
+            requirements(Category.crafting,with(Items.beryllium,74,Items.graphite,57,Items.lead,74,GGItems.Sijingti,58,Items.metaglass,60,Items.titanium,40));
+            size=3;
+            craftTime=60f;
+            consumePower(73/60f);
+            addInput(Items.graphite,4,Items.titanium,6,Items.silicon,8);//配方A：4石墨，6钛，8硅;配方B：6石墨，4铍，12硅
+            addInput(Items.graphite,6,Items.beryllium,4,Items.silicon,12);
+            outputItem=new ItemStack(GGItems.TanNaMiHeXing,1);
+        }};
+        Ctiqu=new GenericCrafter("碳提取器"){{
+            hasItems=hasLiquids=hasPower=true;
+            requirements(Category.crafting,with(Items.copper,26,Items.beryllium,14,Items.graphite,13,Items.lead,34,GGItems.Sijingti,18));
+            size=3;
+            craftTime=30f;
+            consumePower(73/30f);
+            consumeItem(GGItems.ThuaKuangShi,5);
+            outputItem=new ItemStack(Items.graphite,4);
+            outputLiquid=new LiquidStack(Liquids.slag, (float) 2 /3);
+        }};
         sitichun=new GenericCrafter("guitichunchang"){{
             requirements(Category.crafting,with(Items.copper,43,Items.beryllium,38,GGItems.Sijingti,50,Items.lead,32,Items.plastanium,12));
             size=3;
+            itemCapacity =50;//最大物品容量
             health=500;
             craftTime=120;
             hasItems=true;
             hasPower=true;
+            craftEffect = Fx.smeltsmoke;
+            drawer = new DrawMulti(new DrawDefault(), new DrawFlame(Color.valueOf("ffce4a")));
             consumePower(50/6f);
             consumeItems(with(Items.sporePod,6,Items.coal,16,Items.lead,18,Items.sand,22));
             outputItem=new ItemStack(Items.silicon,20);
 
         }};
         ksbl=new GenericCrafter("kesug"){{
+            itemCapacity = 30;//最大物品容量
             requirements(Category.crafting,with(Items.copper,23,Items.beryllium,28,GGItems.Sijingti,25,Items.lead,12,Items.plastanium,12));
             hasItems=true;
             hasLiquids=hasPower=true;
@@ -51,7 +105,7 @@ public class GG_factory {
             consumePower(3.56f);
             consumeItems(with(Items.plastanium, 2,Items.metaglass,3));
             consumeLiquid(Liquids.water,(float) 1 /6);
-            outputLiquid=new LiquidStack(GG_Liquids.zaos, (float) 2 /60);
+            outputLiquid=new LiquidStack(GG_Liquids.zaisuye, (float) 2 /60);
         }};
         baozif=new factory("baozifsc"){{
             this.canMirror=false;

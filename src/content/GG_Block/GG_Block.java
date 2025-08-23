@@ -179,8 +179,8 @@ addInput(Items.silicon,1,Items.coal,2);
             variants = 2;
         }};
         GGxiaoxinggui =new gailubao.gailubaoFactory("xiaoxinggui"){{
-            requirements(Category.crafting, with(Sijingti,150));
-            outputItem = new ItemStack(Items.silicon,1);
+            requirements(Category.crafting, with(Items.copper,24,Items.lead,21));
+            outputItem = new ItemStack(Sijingti,1);
             craftTime = 60f;
             itemCapacity = 20;
             size =3;
@@ -189,7 +189,7 @@ addInput(Items.silicon,1,Items.coal,2);
             hasPower = true;//消耗电力
             craftEffect = Fx.trailFade;
             consumePower(0.45f);//*100
-            consumeItem(Sijingti, 5);
+            consumeItem(Sifenmo, 5);//Sifenmo,1
         }};
         oreThuawu = new OreBlock("orethuawu-wall"){{
             itemDrop = GGItems.ThuaKuangShi;

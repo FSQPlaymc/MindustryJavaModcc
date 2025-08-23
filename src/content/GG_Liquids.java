@@ -5,9 +5,9 @@ import mindustry.content.StatusEffects;
 import mindustry.type.Liquid;
 
 public class GG_Liquids {
-    public static Liquid oo ,os,zaos;
+    public static Liquid oo ,os,zaisuye;
     public static void GGLiquids(){
-        zaos=new Liquid("zaisuye",Color.valueOf("b0ef35")){{
+        zaisuye=new Liquid("zaisuye",Color.valueOf("b0ef35")){{
             this.coolant = true;
             boilPoint = 0.5f;
             this.temperature = 0.3F; // 初始化温度值为0.5

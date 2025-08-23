@@ -30,6 +30,7 @@ public abstract class factory extends AdaptCrafter {
 
     public factory(String name) {
         super(name);
+        this.rotate = false;//贴图不转
         this.canMirror=true;//是否镜像
         consume(new ConsumeRecipe(RecipeGenericCrafterBuild::getRecipe, RecipeGenericCrafterBuild::getDisplayRecipe));
     }

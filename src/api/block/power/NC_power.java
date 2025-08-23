@@ -5,6 +5,7 @@ import arc.graphics.Color;
 import arc.graphics.g2d.TextureRegion;
 import arc.math.Mathf;
 import arc.struct.EnumSet;
+import arc.util.Nullable;
 import content.GG_Block.GG_Powers;
 import content.GG_Block.GG_walls;
 import mindustry.Vars;
@@ -15,13 +16,23 @@ import mindustry.gen.Building;
 import mindustry.gen.Sounds;
 import mindustry.graphics.Pal;
 import mindustry.type.Item;
+import mindustry.type.ItemStack;
+import mindustry.type.LiquidStack;
 import mindustry.ui.Bar;
 import mindustry.world.blocks.power.NuclearReactor;
+import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.meta.BlockFlag;
+import mindustry.world.meta.Stat;
+import mindustry.world.meta.StatUnit;
+import mindustry.world.meta.StatValues;
 
 import java.util.Arrays;
 
 public class NC_power extends NuclearReactor {
+    @Nullable
+    public ItemStack outputItem;
+    @Nullable
+    public ItemStack[] outputItems;
         public float baseheat;
         public float basepower;
         public float cold;
@@ -86,6 +97,30 @@ public class NC_power extends NuclearReactor {
     private float xiaolu =0;//冷却量
     private int checkY;
     private float SDQ;
+        public boolean outputsItems() {
+        return this.outputItems != null;
+    }
+    public void init() {
+        if (this.outputItems == null && this.outputItem != null) {
+            this.outputItems = new ItemStack[]{this.outputItem};
+        }
+        if (this.outputItems != null) {
+            this.hasItems = true;
+        }
+        super.init();
+    }
+
+    public void setStats() {
+        this.stats.timePeriod = this.itemDuration;
+        super.setStats();
+        if (this.hasItems && this.itemCapacity > 0 || this.outputItems != null) {
+            this.stats.add(Stat.productionTime, this.itemDuration / 60.0F, StatUnit.seconds);
+        }
+
+        if (this.outputItems != null) {
+            this.stats.add(Stat.output, StatValues.items(this.itemDuration, this.outputItems));
+        }
+    }
     @Override
     public void setBars(){
         super.setBars();
@@ -119,7 +154,7 @@ public class NC_power extends NuclearReactor {
                         Building neighbor = Vars.world.build(checkX, tileY);
 
                         // 检查方块是否存在且为GG_walls.cs
-                        if (neighbor != null &&  (neighbor.block == GG_walls.cs || neighbor.block == GG_walls.glass)) {
+                        if (neighbor != null &&  (neighbor.block == GG_walls.cs || neighbor.block == GG_walls.glass||neighbor.block==GG_Powers.ffff)) {
                             factoryX=factoryX-1;
                             // 在这里添加对每个检测到的工厂的操作
                             // 例如：GG_walls.GG_wallsBuild factory = (GG_walls.GG_wallsBuild) neighbor;
@@ -137,7 +172,7 @@ public class NC_power extends NuclearReactor {
                         Building neighbor = Vars.world.build(checkX, tileY);
 
                         // 检查方块是否存在且为GG_walls.cs
-                        if (neighbor != null &&  (neighbor.block == GG_walls.cs || neighbor.block == GG_walls.glass)) {
+                        if (neighbor != null &&  (neighbor.block == GG_walls.cs || neighbor.block == GG_walls.glass||neighbor.block==GG_Powers.ffff)) {
                             factoryX=factoryX+1;
                             // 在这里添加对每个检测到的工厂的操作
                             // 例如：GG_walls.GG_wallsBuild factory = (GG_walls.GG_wallsBuild) neighbor;
@@ -155,7 +190,7 @@ public class NC_power extends NuclearReactor {
                         checkY = tileY + i; // 上侧第i个位置
                         Building neighbor = Vars.world.build(tileX, checkY);
                         // 检查方块是否存在且为GG_walls.cs
-                        if (neighbor != null &&  (neighbor.block == GG_walls.cs || neighbor.block == GG_walls.glass)) {
+                        if (neighbor != null &&  (neighbor.block == GG_walls.cs || neighbor.block == GG_walls.glass||neighbor.block==GG_Powers.ffff)) {
                             factoryY = factoryY +1;
                             // 在这里添加对每个检测到的工厂的操作
                             // 例如：GG_walls.GG_wallsBuild factory = (GG_walls.GG_wallsBuild) neighbor;
@@ -173,7 +208,7 @@ public class NC_power extends NuclearReactor {
                         Building neighbor = Vars.world.build(tileX, checkY);
 
                         // 检查方块是否存在且为GG_walls.cs
-                        if (neighbor != null &&  (neighbor.block == GG_walls.cs || neighbor.block == GG_walls.glass)) {
+                        if (neighbor != null &&  (neighbor.block == GG_walls.cs || neighbor.block == GG_walls.glass||neighbor.block==GG_Powers.ffff)) {
                             factoryY = factoryY -1;
                             // 在这里添加对每个检测到的工厂的操作
                             // 例如：GG_walls.GG_wallsBuild factory = (GG_walls.GG_wallsBuild) neighbor;
@@ -211,14 +246,16 @@ public class NC_power extends NuclearReactor {
                         System.out.println("FL：" + FL);
                         System.out.println("FS：" + FS);
                         System.out.println("数组：" + Arrays.deepToString(asdf));
-//                    System.out.println("最大x："+tileX);
-//                    System.out.println("最小x："+checkX);
-//                    System.out.println("最大Y："+checkY);
-//                    System.out.println("x："+X);
-//                    System.out.println("y："+Y);
-                        if (neighboru != null && (neighboru.block == GG_walls.cs || neighboru.block == GG_walls.glass || neighboru.block == GG_Powers.ffff)) {
+                    System.out.println("最大x："+tileX);
+                    System.out.println("最小x："+checkX);
+                    System.out.println("最大Y："+checkY);
+                    System.out.println("x："+X);
+                    System.out.println("y："+Y);
+                        if (neighboru != null && (neighboru.block == GG_walls.cs || neighboru.block == GG_walls.glass )) {
                             asdf[S][L] = 90;
-                        } else if (neighboru != null && neighboru.block == GG_walls.SL) {
+                        }else if (neighboru != null &&neighboru.block == GG_Powers.ffff){
+                            asdf[S][L] = 99;
+                        }else if (neighboru != null && neighboru.block == GG_walls.SL) {
                             asdf[S][L] = 1;
                             SQQ += 0.6F;//测试用
                             //this.heat += 1+((DWS-1)*0.8) * NC_power.this.heating * Math.min(this.delta(), 4.0F);
@@ -268,13 +305,25 @@ public class NC_power extends NuclearReactor {
                     S = 0;
                     boolean tj1, tj2;
                     int smk = 0;
-                    int w, s, a, d;
+                    int w, s, a, d,l=0;
                     xiaolu = fare = 0;
                     for (int i = 1; i < 1024; i++) {
                         //tj1 = tj2 = false;
                         int e = asdf[S][L];
-                        if (L == 0 || S == 0 || L == (FL - 1) || S == (FS - 1)) {
-                            if (e != 90) {
+                        if (L == 0 || S == 0 || L == (FL - 1) || S == (FS - 1)) {//第一遍
+                            if (e == 90||e==99) {
+                                if (e==99) {
+                                    l++;
+                                    if (l>2) {
+                                        System.out.println("出问题1s" + S);
+                                        System.out.println("出问题1s" + L);
+                                        System.out.println("出问题1s" + asdf[S][L]);
+                                        SDQ = 99999999;
+                                        DWS = 0;
+                                        break;
+                                    }
+                                }
+                            }else {
                                 System.out.println("出问题" + S);
                                 System.out.println("出问题" + L);
                                 System.out.println("出问题" + asdf[S][L]);
@@ -315,11 +364,23 @@ public class NC_power extends NuclearReactor {
                             }
                         }
                     }
-                    for (int i = 1; i < 1024; i++) {
+                    for (int i = 1; i < 1024; i++) {//第二遍
                         tj1 = tj2 = false;
                         int e = asdf[S][L];
                         if (L == 0 || S == 0 || L == (FL - 1) || S == (FS - 1)) {
-                            if (e != 90) {
+                            if (e == 90||e==99) {
+                                if (e==99) {
+                                    l++;
+                                    if (l>2) {
+                                        System.out.println("出问题2s" + S);
+                                        System.out.println("出问题2s" + L);
+                                        System.out.println("出问题2s" + asdf[S][L]);
+                                        SDQ = 99999999;
+                                        DWS = 0;
+                                        break;
+                                    }
+                                }
+                            }else {
                                 System.out.println("出问题" + S);
                                 System.out.println("出问题" + L);
                                 System.out.println("出问题" + asdf[S][L]);
@@ -448,7 +509,15 @@ public class NC_power extends NuclearReactor {
 
                 // 定时消耗燃料：当燃料计时器达到设定值（itemDuration / 时间缩放加单元数）时，消耗1单位燃料
                 if (this.timer(NC_power.this.timerFuel, NC_power.this.itemDuration / (this.timeScale))) {
-                    this.consume(); // 内部会减少1单位fuelItem（钍）
+                    this.consume();
+                    if (NC_power.this.outputItems != null) {
+                        for(ItemStack output : NC_power.this.outputItems) {
+                            for(int i = 0; i < output.amount; ++i) {
+                                this.offload(output.item);
+                            }
+                        }
+                    }
+                    // 内部会减少1单位fuelItem（钍）
                 }
             } else {
                 // 无燃料或未启用时，发电效率为0

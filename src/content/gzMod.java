@@ -18,7 +18,7 @@ public class gzMod extends  Mod{
         GGItems.aloud();//加载方式
         GGNewPT.NewP();
         GG_Block.Ore();
-        GG_factory.factory();
+        GG_factory.factorys();
         GG_Powers.Power();
         GG_units.units();
         //Itemschange.chi();

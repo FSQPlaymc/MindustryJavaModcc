@@ -43,19 +43,25 @@ public class GG_units
             // 加载武器贴图
             this.weapons.add(我不到=new Weapon("core-db-我不到") {{//要加自己“模组名-”
                     System.out.println(this.name);
-                    constructor = LegsUnit::create;
                     //this.shootSound = Sounds.missile;
-                    //this.mirror = false;
+                    this.mirror = false;//镜像
                     //this.showStatSprite = false;
                     this.display=true;
                     this.top = false;
+//                - recoil: 后坐力
+//                        - recoils: 后坐力数量（用于多管武器）
+//                - recoilTime: 后坐力恢复时间
+//                        - recoilPow: 后坐力曲线指数
+
                     this.shootY = 2.0F;
-                    this.reload = 9.0F;
+                    this.shootX=4.3f;
+                    this.reload = 99.9F;
                     this.ejectEffect = Fx.none;
-                    this.recoil = 1.0F;
-                    this.x = 5.0F;
+                    this.recoil = 20.0F;
+                    this.x = 0.0F;
+                    this.y=3.3f;
                     this.shootSound = Sounds.flame;
-                this.bullet = new ArtilleryBulletType(3.0F, 40.0F) {
+                this.bullet = new ArtilleryBulletType(3.0F, 60.0F) {
                     {
                         this.shootEffect = new MultiEffect(new Effect[]{Fx.shootSmallColor, new Effect(9.0F, (e) -> {
                             Draw.color(Color.white, e.color, e.fin());
@@ -67,7 +73,7 @@ public class GG_units
                         this.backColor = this.hitColor = Pal.techBlue;
                         this.frontColor = Color.white;
                         this.knockback = 0.8F;
-                        this.lifetime = 46.0F;
+                        this.lifetime = 102.2F;
                         this.width = this.height = 9.0F;
                         this.splashDamageRadius = 19.0F;
                         this.splashDamage = 30.0F;
