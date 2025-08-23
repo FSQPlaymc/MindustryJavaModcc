@@ -21,6 +21,7 @@ public class gzMod extends  Mod{
         GG_factory.factorys();
         GG_Powers.Power();
         GG_units.units();
+        GG_tree.tree();
         //Itemschange.chi();
         // 实例化 foreshadow 炮台
 }}

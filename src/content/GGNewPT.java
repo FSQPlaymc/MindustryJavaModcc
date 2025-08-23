@@ -78,7 +78,7 @@ public class GGNewPT {
                     mindustry.content.Items.copper,1145
             ));
             ammo(
-                    GGItems.itemCZzw,new BasicBulletType(3.5f,15){{//speed：飞行速度 damage参数表示子弹的基础伤害值
+                    GGItems.itemCZzw,new BasicBulletType(3.5f,1145){{//speed：飞行速度 damage参数表示子弹的基础伤害值
                         pierceDamageFactor=0.7f;
                         splashDamageRadius = 25f * 0.75f; // 溅射半径：18.75格
                         splashDamage = 1145f;        // 溅射伤害：33

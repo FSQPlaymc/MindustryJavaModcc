@@ -24,7 +24,7 @@ public class GG_units
     public static void units(){
         tizhizhu=new UnitType("tizhizhu"){{
             constructor = LegsUnit::create;
-            this.speed = 0.6F;
+            this.speed = 1.6F;
             this.drag = 0.4F;
             this.hitSize = 13.0F;
             this.rotateSpeed = 3.0F;
@@ -34,7 +34,7 @@ public class GG_units
             this.legCount = 4;
             this.legLength = 9.0F;
             this.legForwardScl = 0.6F;
-            this.legMoveSpace = 1.9F;
+            this.legMoveSpace = 1.3F;//移速
             this.hovering = true;
             this.armor = 3.0F;
             this.ammoType = new ItemAmmoType(Items.coal);
@@ -57,7 +57,7 @@ public class GG_units
                     this.shootX=4.3f;
                     this.reload = 99.9F;
                     this.ejectEffect = Fx.none;
-                    this.recoil = 20.0F;
+                    this.recoil = 7.0F;//显示的
                     this.x = 0.0F;
                     this.y=3.3f;
                     this.shootSound = Sounds.flame;
@@ -70,13 +70,12 @@ public class GG_units
                             Drawf.light(e.x, e.y, 23.0F, e.color, e.fout() * 0.7F);
                         })});
                         this.collidesTiles = true;
+                        this.collides = true; // 进行碰撞检测
                         this.backColor = this.hitColor = Pal.techBlue;
                         this.frontColor = Color.white;
                         this.knockback = 0.8F;
                         this.lifetime = 102.2F;
                         this.width = this.height = 9.0F;
-                        this.splashDamageRadius = 19.0F;
-                        this.splashDamage = 30.0F;
                         this.trailLength = 27;
                         this.trailWidth = 2.5F;
                         this.trailEffect = Fx.none;
@@ -84,6 +83,8 @@ public class GG_units
                         this.trailInterp = Interp.slope;
                         this.shrinkX = 0.6F;
                         this.shrinkY = 0.2F;
+                        this.splashDamageRadius = 45.0F;
+                        this.splashDamage = 40.0F;
                         this.hitEffect = this.despawnEffect = new MultiEffect(new Effect[]{Fx.hitSquaresColor, new WaveEffect() {
                             {
                                 this.colorFrom = this.colorTo = Pal.techBlue;
