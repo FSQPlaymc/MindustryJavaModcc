@@ -10,23 +10,28 @@ import arc.math.Angles;
 import arc.math.Interp;
 import arc.struct.Seq;
 import content.GGItems;
+import content.GG_units;
 import mindustry.content.Fx;
 import mindustry.content.Items;
 import mindustry.content.Liquids;
+import mindustry.content.UnitTypes;
 import mindustry.entities.Effect;
 import mindustry.graphics.Layer;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
+import mindustry.world.Block;
 import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.production.GenericCrafter;
+import mindustry.world.blocks.units.UnitFactory;
 
 import static content.GGItems.Sifenmo;
 import static content.GGItems.Sijingti;
 import static mindustry.type.ItemStack.with;
 
 public class GG_Block {
+    public static Block groundFactory;
 public static DirectionalLiquidUnloader gasd;
     public static GenericCrafter chuangZaolu;
     public static gailubao.gailubaoFactory GGxiaoxinggui;
@@ -43,7 +48,16 @@ public static DirectionalLiquidUnloader gasd;
     public static Drill luoxuanzuan;
     public static void Ore(){
 //---------------------------------------单位厂--------------------------------------------------------------------------------------------------------------------------------//
-
+        groundFactory = new UnitFactory("陆军工厂"){{
+            requirements(Category.units, with(Items.copper, 50, Items.lead, 120, Items.silicon, 80,Items.graphite, 100));
+            plans = Seq.with(
+                    new UnitPlan(UnitTypes.crawler, 60f * 10, with(Items.silicon, 8, Items.coal, 10)),
+                    new UnitPlan(GG_units.tizhizhu, 60f * 30, with(Items.silicon, 20, Items.graphite, 30,Items.copper,20, Sijingti,10))
+            );
+            size = 2;
+            consumePower(1.2f);
+            researchCostMultiplier = 0.5f;
+        }};
 //------------------------------------------单位厂-----------------------------------------------------------------------------------------------------------------------------//
         ghg=new GG_HXg("g1hx"){{
             requirements(Category.effect,with(Items.copper,4000,Items.lead,4000,Items.carbide,200, Sijingti,1000));
@@ -174,16 +188,18 @@ addInput(Items.silicon,1,Items.coal,2);
         }};
 
         oreGuijingti = new OreBlock("silicon-crystal-slag-wall"){{
-            itemDrop = Sifenmo;
+            itemDrop = Sijingti;
             wallOre = true;//墙矿
         }};
         oreGuijingti = new OreBlock("silicon-crystal-slag"){{
-            itemDrop = Sifenmo;
+            itemDrop = Sijingti;
+             oreThreshold = 0.41f;//控制矿石生成的稀疏程度。值越大（越接近1），矿石越稀少；值越小（越接近0），矿石越密集。
+             oreScale = 6.1f;//控制矿石分布图案的频率。值越大，矿石分布越密集（图案更小更频繁）；值越小，矿石分布越稀疏（图案更大更平缓）
             variants = 2;
         }};
         GGxiaoxinggui =new gailubao.gailubaoFactory("xiaoxinggui"){{
             requirements(Category.crafting, with(Items.copper,24,Items.lead,21));
-            outputItem = new ItemStack(Sijingti,1);
+            outputItem = new ItemStack(Items.silicon,1);
             craftTime = 60f;
             itemCapacity = 20;
             size =3;
@@ -192,7 +208,7 @@ addInput(Items.silicon,1,Items.coal,2);
             hasPower = true;//消耗电力
             craftEffect = Fx.trailFade;
             consumePower(0.45f);//*100
-            consumeItem(Sifenmo, 5);//Sifenmo,1
+            consumeItem(Sijingti, 5);//Sifenmo,1
         }};
         oreThuawu = new OreBlock("orethuawu-wall"){{
             itemDrop = GGItems.ThuaKuangShi;

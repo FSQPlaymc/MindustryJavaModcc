@@ -24,17 +24,17 @@ public class GG_units
     public static void units(){
         tizhizhu=new UnitType("tizhizhu"){{
             constructor = LegsUnit::create;
-            this.speed = 1.6F;
+            this.speed = 1.0F;//移速
             this.drag = 0.4F;
             this.hitSize = 13.0F;
             this.rotateSpeed = 3.0F;
             this.targetAir = false;
-            this.health = 600.0F;
+            this.health = 500.0F;
             this.immunities = ObjectSet.with(new StatusEffect[]{StatusEffects.burning, StatusEffects.melting});
             this.legCount = 4;
             this.legLength = 9.0F;
             this.legForwardScl = 0.6F;
-            this.legMoveSpace = 1.3F;//移速
+            this.legMoveSpace = 1.5F;
             this.hovering = true;
             this.armor = 3.0F;
             this.ammoType = new ItemAmmoType(Items.coal);
@@ -42,6 +42,8 @@ public class GG_units
             this.groundLayer = 74.0F;
             // 加载武器贴图
             this.weapons.add(我不到=new Weapon("core-db-我不到") {{//要加自己“模组名-”
+                shootStatus = StatusEffects.slow;
+                shootStatusDuration = reload + 1f;
                     System.out.println(this.name);
                     //this.shootSound = Sounds.missile;
                     this.mirror = false;//镜像
@@ -55,9 +57,9 @@ public class GG_units
 
                     this.shootY = 2.0F;
                     this.shootX=4.3f;
-                    this.reload = 99.9F;
+                    this.reload = 105F;
                     this.ejectEffect = Fx.none;
-                    this.recoil = 7.0F;//显示的
+                    this.recoil = 4.0F;//显示的
                     this.x = 0.0F;
                     this.y=3.3f;
                     this.shootSound = Sounds.flame;

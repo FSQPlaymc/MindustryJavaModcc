@@ -17,10 +17,10 @@ public class gzMod extends  Mod{
         GG_walls.walls();
         GGItems.aloud();//加载方式
         GGNewPT.NewP();
+        GG_units.units();
         GG_Block.Ore();
         GG_factory.factorys();
         GG_Powers.Power();
-        GG_units.units();
         GG_tree.tree();
         //Itemschange.chi();
         // 实例化 foreshadow 炮台
