@@ -26,8 +26,36 @@ public class GG_factory {
     public static factory SGfacto;
     public static factory surgeAlloyF;
     public static factory baozif,TnmXinpian;
-    public static GenericCrafter ksbl,sitichun,Ctiqu;
+    public static GenericCrafter ksbl,sitichun,Ctiqu,Sichunghua,pulverizer;
     public static void factorys(){
+        pulverizer = new GenericCrafter("pulverizer"){{
+            requirements(Category.crafting, with(Items.copper, 30, Items.lead, 25));
+            outputItem = new ItemStack(GGItems.Sijingti, 3);
+            craftEffect = Fx.pulverize;
+            craftTime = 40f;
+            updateEffect = Fx.pulverizeSmall;
+            hasItems = hasPower = true;
+            drawer = new DrawMulti(new DrawDefault(), new DrawRegion("-rotator"){{
+                spinSprite = true;
+                rotateSpeed = 2f;
+            }}, new DrawRegion("-top"));
+            ambientSound = Sounds.grinding;
+            ambientSoundVolume = 0.025f;
+
+            consumeItem(Items.silicon, 1);
+            consumePower(0.50f);
+        }};
+        Sichunghua=new GenericCrafter("硅纯化器"){{
+            requirements(Category.production, with(Items.graphite,24, Items.titanium, 25, Items.silicon, 10));
+            size=2;
+            health=200;
+            hasPower = true;
+            hasItems = true;
+            this.craftTime=50f;
+            consumeItem(Items.silicon,3);
+            consumePower(56/60f);
+            outputItem=new ItemStack(GGItems.Sijingti,2);
+        }};
         cultivator = new AttributeCrafter("cultivator"){{
             requirements(Category.production, with(Items.graphite,24, GGItems.Sijingti, 25, Items.silicon, 10,Items.plastanium,12));
             outputItem = new ItemStack(Items.sporePod, 5);

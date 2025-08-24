@@ -42,6 +42,9 @@ public static DirectionalLiquidUnloader gasd;
     public static OreBlock oreHejing;
     public static Drill luoxuanzuan;
     public static void Ore(){
+//---------------------------------------单位厂--------------------------------------------------------------------------------------------------------------------------------//
+
+//------------------------------------------单位厂-----------------------------------------------------------------------------------------------------------------------------//
         ghg=new GG_HXg("g1hx"){{
             requirements(Category.effect,with(Items.copper,4000,Items.lead,4000,Items.carbide,200, Sijingti,1000));
             size=4;
