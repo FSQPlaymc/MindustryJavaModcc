@@ -179,14 +179,6 @@ addInput(Items.silicon,1,Items.coal,2);
             wallOre =true;
             this.variants = 1;
         }};
-        oreCarbide =new OreBlock("carbide-wall",GGItems.ThuaKuangShi){{
-            wallOre =true;
-            this.variants = 1;
-        }};
-        oreCarbide =new OreBlock("carbide",GGItems.ThuaKuangShi){{
-            this.variants = 1;
-        }};
-
         oreGuijingti = new OreBlock("silicon-crystal-slag-wall"){{
             itemDrop = Sijingti;
             wallOre = true;//墙矿
@@ -207,21 +199,21 @@ addInput(Items.silicon,1,Items.coal,2);
             hasLiquids = false;//消耗流体
             hasPower = true;//消耗电力
             craftEffect = Fx.trailFade;
-            consumePower(0.45f);//*100
+            consumePower(45/60f);//*100
             consumeItem(Sijingti, 5);//Sifenmo,1
         }};
         oreThuawu = new OreBlock("orethuawu-wall"){{
             itemDrop = GGItems.ThuaKuangShi;
            oreDefault = true;
-            //oreThreshold = 0.23f;
-           // oreScale = 9.0f;
+            oreThreshold = 0.83f;
+            oreScale = 7.0f;
             wallOre = true;//墙矿
         }};
         oreThuawu = new OreBlock("orethuawu"){{
             itemDrop = GGItems.ThuaKuangShi;
             oreDefault = true;
-            //oreThreshold = 0.23f;
-            // oreScale = 9.0f;
+            oreThreshold = 0.83f;
+            oreScale = 7.0f;
             //wallOre = true;//墙矿
         }};
 

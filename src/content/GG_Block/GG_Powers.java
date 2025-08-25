@@ -23,21 +23,35 @@ public class GG_Powers {
     public static NC_power ffff;
     public  static ConsumeGenerator reanshaoshi;
     public static SolarGenerator solarPanel;
-    public static NuclearReactor hefanyingdui;
+    public static NuclearReactor hefanyingdui,jinghuaqi;
     public static void Power(){
+        jinghuaqi=new NuclearReactor("晶化器"){{
+            requirements(Category.power, with(Items.copper,20,GGItems.Sijingti,20));
+            size=2;
+            this.fuelItem = GGItems.Sijingti;//消耗物
+            itemCapacity =10;//最大物品容量
+            health=300;
+            heating=0f;
+            itemDuration = 360f;
+            this.explosionRadius = 0;
+            this.explosionDamage = 0;
+            powerProduction = 18/6f;
+            consumeItem(GGItems.Sijingti,1);
+        }};
         hefanyingdui=new NuclearReactor("核反应堆"){{
             requirements(Category.power, with(Items.lead, 300, Items.silicon, 200, Items.graphite, 150, Items.thorium, 150, Items.metaglass, 50,GGItems.TanNaMiHeXing,200));
             ambientSound = Sounds.hum;
             ambientSoundVolume = 0.74f;
             size = 5;
             health = 1700;
+            itemCapacity =40;//最大物品容量
             itemDuration = 360f;
             powerProduction = 40000/6f;
-            heating = 0.05f;
+            heating = 0.09f;
             this.explosionRadius = 39;
             this.explosionDamage = 150000;
             consumeItems(with(Items.thorium,4,Items.graphite,2));
-            consumeLiquid(GG_Liquids.zaisuye, heating / coolantPower).update(false);
+            consumeLiquid(Liquids.water, heating / coolantPower).update(false);
         }};
         ffff=new NC_power("ffff"){{
             requirements(Category.power, with(Items.lead, 20, Items.silicon, 32));
@@ -57,7 +71,7 @@ public class GG_Powers {
             consumeLiquid(Liquids.cryofluid, heating / coolantPower).update(false);
         }};
          solarPanel = new SolarGenerator("GG-solar-panel") {{
-            requirements(Category.power, with(Items.lead, 20, Items.silicon, 32));
+            requirements(Category.power, with(Items.lead, 20, Items.silicon, 32,GGItems.Sijingti,20));
             powerProduction = 0.72f;
             this.size=2;
         }};

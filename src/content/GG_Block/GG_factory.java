@@ -1,7 +1,6 @@
 package content.GG_Block;
 
 import api.factory;
-import api.more_factory.ConsumePower;
 import arc.graphics.Color;
 import content.GGItems;
 import content.GG_Liquids;
@@ -28,9 +27,55 @@ public class GG_factory {
     public static factory SGfacto;
     public static factory surgeAlloyF;
     public static factory baozif,TnmXinpian;
-    public static GenericCrafter ksbl,sitichun,Ctiqu,Sichunghua,pulverizer,electrolyzer;
-    public static Separator separator;
+    public static GenericCrafter ksbl,sitichun,Ctiqu,Sichunghua,pulverizer,electrolyzer,boli,tuduizhuang;
+    public static Separator separator,Bigfenli;
     public static void factorys(){
+        tuduizhuang=new GenericCrafter("钍对撞机"){{
+            size=3;
+            requirements(Category.crafting, with(Items.silicon, 60, Items.thorium, 30,GGItems.ThuaKuangShi,40,Items.titanium,20));
+            hasPower=hasItems=true;
+            health=250;
+            craftTime=120f;
+            outputItems=ItemStack.with(Items.thorium,15,Items.scrap,5);
+            consumePower(2880);
+            consumeItems(with(Items.surgeAlloy,1,Items.lead,20,Items.scrap,20));
+        }};
+        Bigfenli=new Separator("大型矿渣分解机"){{
+            size=4;
+            craftTime=78;
+            health=400;
+            requirements(Category.crafting, with(Items.silicon, 60, Items.graphite, 90,Items.plastanium,50,GGItems.TanNaMiHeXing,40,Items.thorium,70));
+            results = with(
+                    Items.copper,3,
+                    Items.lead, 3,
+                    Items.graphite, 3,
+                    Items.titanium, 2,
+                    GGItems.Sijingti,3,
+                    Items.surgeAlloy,1,
+                    Items.thorium,2,
+                    Items.tungsten,2,
+                    Items.beryllium,2
+            );
+            hasPower = true;
+            hasItems=true;
+            consumePower(90/6f);
+            consumeLiquid(Liquids.slag,60/6f);
+            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(), new DrawRegion("-spinner", 3, true), new DrawDefault());
+        }};
+        boli=new GenericCrafter("小型玻璃厂"){{
+            requirements(Category.crafting, with(Items.copper, 60, GGItems.Sijingti, 30, Items.lead, 30));
+            craftEffect = Fx.smeltsmoke;
+            outputItem = new ItemStack(Items.metaglass, 1);
+            craftTime = 30f;
+            size = 2;
+            hasPower = hasItems = true;
+            drawer = new DrawMulti(new DrawDefault(), new DrawFlame(Color.valueOf("ffc099")));
+            ambientSound = Sounds.smelter;
+            ambientSoundVolume = 0.07f;
+
+            consumeItems(with(Items.lead, 1, Items.sand, 1));
+            consumePower(0.60f);
+        }};
         electrolyzer = new GenericCrafter("电解室"){
             {
                 requirements(Category.crafting, with(Items.silicon, 50, Items.graphite, 40, Items.beryllium, 130, Items.tungsten, 80));
@@ -86,7 +131,7 @@ public class GG_factory {
             hasPower = true;
             craftTime = 75f;
             size = 2;
-
+            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(), new DrawRegion("-spinner", 3, true), new DrawDefault());
             consumePower(2.1f);
             consumeLiquid(Liquids.slag, 2f / 6f);
 
@@ -111,14 +156,14 @@ public class GG_factory {
             consumePower(0.50f);
         }};
         Sichunghua=new GenericCrafter("硅纯化器"){{
-            requirements(Category.production, with(Items.graphite,24, Items.titanium, 25, Items.silicon, 10));
+            requirements(Category.crafting, with(Items.graphite,24, Items.titanium, 25, Items.silicon, 10));
             size=2;
             health=200;
             hasPower = true;
             hasItems = true;
             this.craftTime=50f;
             consumeItem(GGItems.Sijingti,3);
-            consumePower(56/60f);
+            consumePower(100/60f);
             outputItem=new ItemStack(Items.silicon,2);
         }};
         cultivator = new AttributeCrafter("cultivator"){{
@@ -153,6 +198,7 @@ public class GG_factory {
             requirements(Category.crafting,with(Items.beryllium,74,Items.graphite,57,Items.lead,74,GGItems.Sijingti,58,Items.metaglass,60,Items.titanium,40));
             size=3;
             craftTime=60f;
+            craftEffect = Fx.pulverizeMedium;
             consumePower(73/60f);
             addInput(Items.graphite,4,Items.titanium,6,Items.silicon,8);//配方A：4石墨，6钛，8硅;配方B：6石墨，4铍，12硅
             addInput(Items.graphite,6,Items.beryllium,4,Items.silicon,12);
@@ -235,19 +281,21 @@ public class GG_factory {
             hasPower = hasItems =hasLiquids =true;
             consumePower(7.5f);//*60
             drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
-            addInput(Items.lead,4,Items.beryllium,4,GGItems.Sijingti,2,Liquids.water,0.1666f);
-            addInput(Items.lead,4,Items.beryllium,4,Items.silicon,5,Liquids.water,0.33f);
+            addInput(Items.lead,4,Items.beryllium,4,GGItems.Sijingti,2,Liquids.water,14/60f);
+            addInput(Items.lead,4,Items.beryllium,4,Items.silicon,5,Liquids.water,21/60f);
             outputItem =new ItemStack(Items.surgeAlloy,2);
+            researchCostMultiplier = 0.6f;
         }};
         SGfacto=new factory("plastanium-factory"){{
             health = 180;
             size=3;
             craftTime=80f;
             itemCapacity=20;
-            requirements(Category.crafting, with(Items.silicon,34, GGItems.Sijingti,12,Items.tungsten,17,Items.graphite,24));
+            requirements(Category.crafting, with(Items.silicon,34, GGItems.Sijingti,32,Items.tungsten,27,Items.graphite,24,GGItems.ThuaKuangShi,13));
             hasPower = hasItems =hasLiquids =true;
             consumePower(3.6f);
-            addInput(Items.beryllium,5,Liquids.ozone,16/60f);
+            addInput(Items.beryllium,5,Liquids.ozone,8/60f);
+            addInput(Items.beryllium,5,Liquids.oil ,1/6f);
             outputItem = new ItemStack(Items.plastanium,2);
             outputLiquid =new LiquidStack(GG_Liquids.os,10/6f);
             drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(), new DrawDefault());
