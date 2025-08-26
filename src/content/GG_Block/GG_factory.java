@@ -196,7 +196,7 @@ public class GG_factory {
         TnmXinpian=new factory("纳米芯片打印机"){{
             hasItems=hasPower=true;
             requirements(Category.crafting,with(Items.beryllium,74,Items.graphite,57,Items.lead,74,GGItems.Sijingti,58,Items.metaglass,60,Items.titanium,40));
-            size=3;
+            size=4;
             craftTime=60f;
             craftEffect = Fx.pulverizeMedium;
             consumePower(73/60f);
