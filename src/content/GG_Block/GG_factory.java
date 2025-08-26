@@ -44,6 +44,7 @@ public class GG_factory {
             size=4;
             craftTime=78;
             health=400;
+            liquidCapacity =30;//最大
             requirements(Category.crafting, with(Items.silicon, 60, Items.graphite, 90,Items.plastanium,50,GGItems.TanNaMiHeXing,40,Items.thorium,70));
             results = with(
                     Items.copper,3,
