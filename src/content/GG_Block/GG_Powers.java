@@ -11,7 +11,9 @@ import mindustry.content.Liquids;
 import mindustry.gen.Sounds;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
+import mindustry.type.LiquidStack;
 import mindustry.world.blocks.power.ConsumeGenerator;
+import mindustry.world.blocks.power.ImpactReactor;
 import mindustry.world.blocks.power.NuclearReactor;
 import mindustry.world.blocks.power.SolarGenerator;
 import mindustry.world.consumers.ConsumeItemExplode;
@@ -21,11 +23,24 @@ import mindustry.world.draw.*;
 import static mindustry.type.ItemStack.with;
 
 public class GG_Powers {
+    public static ImpactReactor baoranchongji;
     public static NC_power ffff;
     public  static ConsumeGenerator reanshaoshi,fenlifadian;
     public static SolarGenerator solarPanel;
     public static NuclearReactor hefanyingdui,jinghuaqi;
     public static void Power(){
+        baoranchongji=new ImpactReactor("爆燃冲击反应堆"){{
+            size=4;
+            health = 900;
+            powerProduction = 130f;
+            itemDuration = 140f;
+            ambientSound = Sounds.pulse;
+            ambientSoundVolume = 0.07f;
+            liquidCapacity = 80f;
+
+            consumePower(7200/60f);
+            consumeLiquids(LiquidStack.with(Liquids.oil, 5/60f,GG_Liquids.os,5/6f));
+        }};
         fenlifadian=new GG_ConsumeGenerator("分离发电室"){{
             requirements(Category.power, with(Items.lead, 300, Items.silicon, 200, Items.graphite, 150, Items.thorium, 150, Items.metaglass, 50,GGItems.TanNaMiHeXing,200));
             size=4;
