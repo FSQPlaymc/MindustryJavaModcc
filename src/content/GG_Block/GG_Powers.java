@@ -1,5 +1,6 @@
 package content.GG_Block;
 
+import api.block.power.GG_ConsumeGenerator;
 import api.block.power.NC_power;
 import arc.graphics.Color;
 import content.GGItems;
@@ -21,10 +22,19 @@ import static mindustry.type.ItemStack.with;
 
 public class GG_Powers {
     public static NC_power ffff;
-    public  static ConsumeGenerator reanshaoshi;
+    public  static ConsumeGenerator reanshaoshi,fenlifadian;
     public static SolarGenerator solarPanel;
     public static NuclearReactor hefanyingdui,jinghuaqi;
     public static void Power(){
+        fenlifadian=new GG_ConsumeGenerator("分离发电室"){{
+            requirements(Category.power, with(Items.lead, 300, Items.silicon, 200, Items.graphite, 150, Items.thorium, 150, Items.metaglass, 50,GGItems.TanNaMiHeXing,200));
+            size=4;
+            itemDuration = 60f;
+            hasItems=hasLiquids=true;
+            powerProduction=10000/60f;
+            outputItems= ItemStack.with(Items.plastanium,2,Items.metaglass,1);
+            consumeLiquid(GG_Liquids.zaisuye,10/60f);
+        }};
         jinghuaqi=new NuclearReactor("晶化器"){{
             requirements(Category.power, with(Items.copper,20,GGItems.Sijingti,20));
             size=2;

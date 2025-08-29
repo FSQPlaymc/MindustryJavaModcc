@@ -26,10 +26,14 @@ public class GG_tree {
             node(pulverizer,ItemStack.with(Items.copper,500,Items.lead,500,Items.graphite,200),()->{
                 node(separator,ItemStack.with(Items.graphite,900,Items.silicon,600,GGItems.Sijingti,200),()->{});
                 node(GGxiaoxinggui,ItemStack.with(Items.copper,2000,Items.lead,2000,Items.graphite,1000),()->{
-                    node(surgeAlloyF);
+                    node(tuduizhuang);
+                    node(surgeAlloyF,()->{
+                        node(MKhejin);
+                        node(plastaniumYsji);
+                        node(SYoilY);
+                    });
                     node(TnmXinpian,ItemStack.with(Items.graphite,700,Items.silicon,1000,GGItems.Sijingti,800,Items.titanium,600),()->{
                         node(Bigfenli,ItemStack.with(GGItems.TanNaMiHeXing,400,Items.thorium,1000,Items.plastanium,500),()->{
-
                         });
                     });
                     node(SGfacto,ItemStack.with(Items.tungsten,1000,Items.graphite,2000,GGItems.Sijingti,1000,Items.silicon,2000),Seq.with(new Objectives.Research(Items.tungsten)),()->{});

@@ -11,9 +11,11 @@ import mindustry.gen.Sounds;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
+import mindustry.world.Block;
 import mindustry.world.blocks.production.AttributeCrafter;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.production.Separator;
+import mindustry.world.consumers.ConsumeLiquids;
 import mindustry.world.draw.*;
 import mindustry.world.meta.Attribute;
 import mindustry.world.meta.BlockGroup;
@@ -23,15 +25,48 @@ import static mindustry.type.ItemStack.with;
 
 public class GG_factory {
     public static AttributeCrafter cultivator;
-    public static factory SmallGlassKiln;
+    public static factory SmallGlassKiln,plastaniumYsji;
     public static factory SGfacto;
     public static factory surgeAlloyF;
     public static factory baozif,TnmXinpian;
-    public static GenericCrafter ksbl,sitichun,Ctiqu,Sichunghua,pulverizer,electrolyzer,boli,tuduizhuang;
+    public static GenericCrafter ksbl,sitichun,Ctiqu,Sichunghua,pulverizer,electrolyzer,boli,tuduizhuang,SYoilY,MKhejin;
     public static Separator separator,Bigfenli;
     public static void factorys(){
+        MKhejin=new GenericCrafter("模块化合金冶炼炉"){{
+            size=5;
+            craftTime=80f;
+            requirements(Category.crafting,with(Items.surgeAlloy,25,Items.plastanium,30,Items.metaglass,40,Items.thorium,30,Items.graphite,50));
+            hasItems=hasPower=hasLiquids=true;
+            outputItems=ItemStack.with(Items.surgeAlloy,4,Items.scrap,5);
+            consumeItem(GGItems.Sijingti,15);
+            consumePower(108/6f);
+            consumeLiquids(LiquidStack.with(Liquids.water,10/6f,Liquids.slag,40/60f));
+            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(),new DrawDefault());
+        }};
+        plastaniumYsji=new factory("重型塑钢压缩器"){{
+            size=4;
+            craftTime=70;
+            requirements(Category.crafting,with(Items.graphite,65,Items.plastanium,30,Items.metaglass,40,Items.thorium,30));
+            hasItems=hasPower=hasLiquids=true;
+            outputItem=new ItemStack(Items.plastanium,8);
+            outputLiquid=new LiquidStack(GG_Liquids.os,20/6f);
+            addInput(Items.beryllium,5,Items.titanium,3,Liquids.oil,3/6f);
+            addInput(Items.beryllium,12,Liquids.oil,4/6f);
+            addInput(Items.titanium,14,Liquids.oil,3/6f);
+            consumePower(144/6f);
+        }};
+        SYoilY=new GenericCrafter("石油压缩机"){{
+            size=2;
+            requirements(Category.crafting,with(Items.surgeAlloy,25,Items.plastanium,30,Items.metaglass,40,Items.thorium,30));
+            hasItems=hasPower=hasLiquids=true;
+            craftTime=40;
+            health=200;
+            outputItem=new ItemStack(Items.graphite,4);
+            consumeLiquid(Liquids.oil,15/60f);
+            consumePower(19/6f);
+        }};
         tuduizhuang=new GenericCrafter("钍对撞机"){{
-            size=3;
+            size=5;
             requirements(Category.crafting, with(Items.silicon, 60, Items.thorium, 30,GGItems.ThuaKuangShi,40,Items.titanium,20));
             hasPower=hasItems=true;
             health=250;
@@ -314,9 +349,6 @@ size=2;
             outputItem=new ItemStack(Items.metaglass,1);
             outputLiquid=new LiquidStack(Liquids.water,0.05f);
         }};
-
-
-
     }
 }
 /* 1. scrap -> 碎片
