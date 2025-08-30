@@ -37,6 +37,7 @@ public class GG_Powers {
             ambientSound = Sounds.pulse;
             ambientSoundVolume = 0.07f;
             liquidCapacity = 80f;
+            requirements(Category.power, with(Items.lead, 500, Items.silicon, 300, Items.graphite, 400, Items.thorium, 100, Items.surgeAlloy, 250, Items.metaglass, 250));
 
             consumePower(7200/60f);
             consumeLiquids(LiquidStack.with(Liquids.oil, 5/60f,GG_Liquids.os,5/6f));
