@@ -6,7 +6,10 @@ sourceSets.main.java.srcDirs = ["src"]
 
 repositories{
     mavenCentral()
-
+    maven { url 'https://www.jitpack.io' }          // 添加 JitPack
+    maven {
+        url = 'https://raw.githubusercontent.com/Anuken/MindustryRepo/master/repository'
+    }
     //Downloads the server-release JAR file from Mindustry releases; does not use any real repository. Surprisingly, this is the most reliable option.
     ivy{
         url 'https://github.com/'
@@ -53,9 +56,10 @@ allprojects{
 dependencies{
     def useLatest = false //set to "true" to always depend on the newest version of mindustry
 
-    compileOnly useLatest ? "Anuken:MindustryBuilds:latest" : "Anuken:Mindustry:$mindustryVersion"
-
-    annotationProcessor "Anuken:jabel:v1.0.0"
+    compileOnly files('libs/Mindustry.jar')
+    //compileOnly useLatest ? "Anuken:MindustryBuilds:latest" : "Anuken:Mindustry:$mindustryVersion"
+    annotationProcessor 'com.github.Anuken:jabel:master-SNAPSHOT'
+    //annotationProcessor "Anuken:jabel:v1.0.0"
 }
 
 tasks.register('jarAndroid'){
